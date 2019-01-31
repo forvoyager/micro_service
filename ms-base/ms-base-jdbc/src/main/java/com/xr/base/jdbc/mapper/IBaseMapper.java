@@ -1,7 +1,6 @@
 package com.xr.base.jdbc.mapper;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -34,33 +33,13 @@ public interface IBaseMapper<T> {
 
   /**
    * <p>
-   * 根据 ID 删除
-   * </p>
-   *
-   * @param id 主键ID
-   * @return Integer 删除的行数
-   */
-  Integer deleteById(Serializable id);
-
-  /**
-   * <p>
    * 根据 columnMap 条件，删除记录
    * </p>
    *
    * @param columnMap 表字段 map 对象
    * @return Integer 删除的行数
    */
-  Integer deleteByMap(Map<String, Object> columnMap);
-
-  /**
-   * <p>
-   * 删除（根据ID 批量删除）
-   * </p>
-   *
-   * @param idList 主键ID列表
-   * @return Integer 删除的行数
-   */
-  Integer deleteBatchIds(Collection<? extends Serializable> idList);
+  Integer delete(Map<String, Object> columnMap);
 
   /**
    * <p>
@@ -84,16 +63,6 @@ public interface IBaseMapper<T> {
 
   /**
    * <p>
-   * 查询（根据ID 批量查询）
-   * </p>
-   *
-   * @param idList 主键ID列表
-   * @return List<T>
-   */
-  List<T> selectBatchIds(Collection<? extends Serializable> idList);
-
-  /**
-   * <p>
    * 查询（根据 columnMap 条件）
    * </p>
    *
@@ -111,15 +80,5 @@ public interface IBaseMapper<T> {
    * @return long
    */
   long selectCount(Map<String, Object> columnMap);
-
-  /**
-   * <p>
-   * 翻页查询
-   * </p>
-   *
-   * @param columnMap 表字段 map 对象
-   * @return
-   */
-  List<T> selectPage(Map<String, Object> columnMap);
 
 }
