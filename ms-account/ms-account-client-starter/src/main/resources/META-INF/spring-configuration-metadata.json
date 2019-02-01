@@ -1,0 +1,19 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "ms.account.client",
+      "type": "com.xr.account.client.AccountClientProperties",
+      "sourceType": "com.xr.account.client.AccountClientProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.xr.account.client.AccountClientProperties",
+      "defaultValue": true,
+      "name": "ms.account.client.enabled",
+      "description": "Account服务是否加载",
+      "type": "java.lang.Boolean"
+    }
+  ]
+}
