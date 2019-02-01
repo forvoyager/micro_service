@@ -1,5 +1,6 @@
 package com.xr.base.core.util;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,6 +14,16 @@ public final class MapUtils {
     }
 
     return false;
+  }
+
+  public static <K, V> Map<K, V> newHashMap(Object... args) {
+    HashMap map = new HashMap();
+    if (args != null) {
+      for (int i = 0; i < args.length; i++) {
+        map.put(args[i], args[++i]);
+      }
+    }
+    return map;
   }
 
   private MapUtils(){}

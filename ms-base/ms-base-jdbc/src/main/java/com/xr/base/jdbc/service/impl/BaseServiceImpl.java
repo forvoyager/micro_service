@@ -1,6 +1,7 @@
 package com.xr.base.jdbc.service.impl;
 
 import com.xr.base.core.util.CollectionUtils;
+import com.xr.base.core.util.MapUtils;
 import com.xr.base.core.util.ReflectUtils;
 import com.xr.base.core.util.StringUtils;
 import com.xr.base.jdbc.core.Cluster;
@@ -71,17 +72,17 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
   @Override
   public Integer deleteById(Serializable id) throws Exception {
-    return this.baseMapper.deleteById(id);
+    return this.baseMapper.delete(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
   }
 
   @Override
   public Integer deleteByMap(Map<String, Object> columnMap) throws Exception {
-    return this.baseMapper.deleteByMap(columnMap);
+    return this.baseMapper.delete(columnMap);
   }
 
   @Override
   public Integer deleteBatchIds(Collection<? extends Serializable> idList) throws Exception {
-    return this.baseMapper.deleteBatchIds(idList);
+    return this.baseMapper.delete(MapUtils.newHashMap("idList", idList));
   }
 
   @Override
@@ -101,7 +102,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
   @Override
   public List<T> selectBatchIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception {
-    return this.baseMapper.selectBatchIds(idList);
+    return this.baseMapper.selectList(MapUtils.newHashMap("idList", idList));
   }
 
   @Override

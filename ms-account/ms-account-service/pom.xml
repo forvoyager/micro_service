@@ -15,6 +15,24 @@
   <name>ms-account-service</name>
 
   <dependencies>
+    <dependency>
+      <groupId>com.xr</groupId>
+      <artifactId>ms-account-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.xr</groupId>
+      <artifactId>ms-base-jdbc</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
