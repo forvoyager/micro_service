@@ -4,9 +4,10 @@ import com.xr.account.common.controller.IAccountController;
 import com.xr.account.common.model.AccountModel;
 import com.xr.account.service.IAccountService;
 import com.xr.base.core.dto.ResultDto;
+import com.xr.base.jdbc.core.Cluster;
 import com.xr.base.jdbc.page.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -26,61 +27,62 @@ public class AccountController implements IAccountController{
 
   @Override
   public ResultDto<AccountModel> insert(@RequestBody AccountModel entity) throws Exception {
-    return null;
+    return ResultDto.success("成功", accountService.insert(entity));
   }
 
   @Override
   public ResultDto<Integer> insertBatch(@RequestBody List<AccountModel> entityList) throws Exception {
-    return null;
+    return ResultDto.success("成功", accountService.insertBatch(entityList));
   }
 
   @Override
   public ResultDto<AccountModel> insertOrUpdate(@RequestBody AccountModel entity) throws Exception {
-    return null;
+    return ResultDto.success("成功", accountService.insertOrUpdate(entity));
   }
 
   @Override
-  public ResultDto<Integer> deleteById(@RequestParam("id") Long id) throws Exception {
-    return null;
+  public ResultDto<Integer> deleteById(@PathVariable("id") long id) throws Exception {
+    return ResultDto.success("成功", accountService.deleteById(id));
   }
 
   @Override
   public ResultDto<Integer> deleteByMap(@RequestBody Map<String, Object> columnMap) throws Exception {
-    return null;
+    return ResultDto.success("成功", accountService.deleteByMap(columnMap));
   }
 
   @Override
   public ResultDto<Integer> update(@RequestBody AccountModel entity) throws Exception {
-    return null;
+    return ResultDto.success("成功", accountService.update(entity));
   }
 
   @Override
-  public ResultDto<AccountModel> selectById(@RequestParam("id") Long id, @RequestParam("master") boolean master) throws Exception {
-    return null;
+  public ResultDto<AccountModel> selectById(@PathVariable("id") long id, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectById(id, master));
   }
 
   @Override
-  public ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception {
-    return null;
+  public ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectList(columnMap, master));
   }
 
   @Override
-  public ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception {
-    return null;
+  public ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectOne(columnMap, master));
   }
 
   @Override
-  public ResultDto<Map<String, Object>> selectMap(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception {
-    return null;
+  public ResultDto<Map<String, Object>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectMap(columnMap, master));
   }
 
   @Override
-  public ResultDto<Long> selectCount(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception {
-    return null;
+  public ResultDto<Long> selectCount(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectCount(columnMap, master));
   }
 
   @Override
-  public ResultDto<Page<AccountModel>> selectPage(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception {
-    return null;
+  public ResultDto<Page<AccountModel>> selectPage(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectPage(columnMap, master));
   }
+
 }

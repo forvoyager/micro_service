@@ -5,8 +5,8 @@ package com.xr.base.jdbc.core;
  */
 public enum Cluster {
 
-  MASTER,
-  SLAVE,
+  master,
+  slave,
   ;
 
   private Cluster(){

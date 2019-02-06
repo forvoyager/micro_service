@@ -1,5 +1,8 @@
 package com.xr.base.core.dto;
 
+import com.xr.base.core.enums.ResultCodeEnum;
+import com.xr.base.core.util.DateUtil;
+
 import java.io.Serializable;
 import java.util.Map;
 
@@ -29,6 +32,32 @@ public class ResultDto<T> implements Serializable{
    * 时间
    */
   private Long time;
+
+  public static ResultDto successMessage(String msg) {
+    return success(msg, null);
+  }
+
+  public static ResultDto success(String msg, Object data) {
+    ResultDto result = new ResultDto();
+    result.setCode(ResultCodeEnum.SUCCESS.getCode());
+    result.setMessage(msg);
+    result.setTime(DateUtil.currentTimeInSecond());
+    result.setData(data);
+    return result;
+  }
+
+  public static ResultDto errorMessage(String msg) {
+    return error(msg, null);
+  }
+
+  public static ResultDto error(String msg, Object data) {
+    ResultDto result = new ResultDto();
+    result.setCode(ResultCodeEnum.UNKNOW_SYSTEM_ERROR.getCode());
+    result.setMessage(msg);
+    result.setTime(DateUtil.currentTimeInSecond());
+    result.setData(data);
+    return result;
+  }
 
   public String getCode() {
     return code;

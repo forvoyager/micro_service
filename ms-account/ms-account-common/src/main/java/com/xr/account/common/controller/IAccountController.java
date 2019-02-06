@@ -2,11 +2,11 @@ package com.xr.account.common.controller;
 
 import com.xr.account.common.model.AccountModel;
 import com.xr.base.core.dto.ResultDto;
+import com.xr.base.jdbc.core.Cluster;
 import com.xr.base.jdbc.page.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -60,7 +60,7 @@ public interface IAccountController {
    * @return Integer 删除的行数
    */
   @RequestMapping("/account/delete/{id}")
-  ResultDto<Integer> deleteById(@PathVariable("id") Long id) throws Exception;
+  ResultDto<Integer> deleteById(@PathVariable("id") long id) throws Exception;
 
   /**
    * <p>
@@ -94,7 +94,7 @@ public interface IAccountController {
    * @return AccountModel
    */
   @RequestMapping("/account/select/{master}/{id}")
-  ResultDto<AccountModel> selectById(@PathVariable("id") Long id, @PathVariable("master") boolean master) throws Exception;
+  ResultDto<AccountModel> selectById(@PathVariable("id") long id, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
@@ -105,8 +105,8 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return List<AccountModel>
    */
-  @RequestMapping("/account/select/list")
-  ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
+  @RequestMapping("/account/select/{master}/list")
+  ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
@@ -117,8 +117,8 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return AccountModel
    */
-  @RequestMapping("/account/select/one")
-  ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
+  @RequestMapping("/account/select/{master}/one")
+  ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
@@ -129,8 +129,8 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return Map<String,Object>
    */
-  @RequestMapping("/account/select/map")
-  ResultDto<Map<String, Object>> selectMap(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
+  @RequestMapping("/account/select/{master}/map")
+  ResultDto<Map<String, Object>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
@@ -141,8 +141,8 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return long
    */
-  @RequestMapping("/account/select/count")
-  ResultDto<Long> selectCount(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
+  @RequestMapping("/account/select/{master}/count")
+  ResultDto<Long> selectCount(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
@@ -153,7 +153,7 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return
    */
-  @RequestMapping("/account/select/page")
-  ResultDto<Page<AccountModel>> selectPage(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
+  @RequestMapping("/account/select/{master}/page")
+  ResultDto<Page<AccountModel>> selectPage(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
 
 }

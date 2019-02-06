@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xr.account.mapper.AccountMapper">
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.xr.account.common.model.AccountModel" keyProperty="user_id">
+        <![CDATA[ INSERT INTO `ms_account` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ `user_id`, ]]>
+            </if>
+            <if test="opentime!=null and opentime.toString()!=''">
+                <![CDATA[ `opentime`, ]]>
+            </if>
+            <if test="addtime!=null and addtime.toString()!=''">
+                <![CDATA[ `addtime`, ]]>
+            </if>
+            <if test="uptime!=null and uptime.toString()!=''">
+                <![CDATA[ `uptime`, ]]>
+            </if>
+            <if test="acc_type!=null and acc_type.toString()!=''">
+                <![CDATA[ `acc_type`, ]]>
+            </if>
+        </trim>
+        <![CDATA[ VALUES ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ #{user_id}, ]]>
+            </if>
+            <if test="opentime!=null and opentime.toString()!=''">
+                <![CDATA[ #{opentime}, ]]>
+            </if>
+            <if test="addtime!=null and addtime.toString()!=''">
+                <![CDATA[ #{addtime}, ]]>
+            </if>
+            <if test="uptime!=null and uptime.toString()!=''">
+                <![CDATA[ #{uptime}, ]]>
+            </if>
+            <if test="acc_type!=null and acc_type.toString()!=''">
+                <![CDATA[ #{acc_type}, ]]>
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" parameterType="map">
+        <![CDATA[ INSERT INTO `ms_account` (`user_id`, `opentime`, `addtime`, `uptime`, `acc_type`) VALUES ]]>
+        <foreach collection="list" separator="," item="item">
+            (#{item.user_id}, #{item.opentime}, #{item.addtime}, #{item.uptime}, #{item.acc_type})
+        </foreach>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.xr.account.common.model.AccountModel">
+        <![CDATA[ UPDATE `ms_account` ]]>
+        <set>
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ `user_id` = #{user_id}, ]]>
+            </if>
+            <if test="opentime!=null and opentime.toString()!=''">
+                <![CDATA[ `opentime` = #{opentime}, ]]>
+            </if>
+            <if test="addtime!=null and addtime.toString()!=''">
+                <![CDATA[ `addtime` = #{addtime}, ]]>
+            </if>
+            <if test="uptime!=null and uptime.toString()!=''">
+                <![CDATA[ `uptime` = #{uptime}, ]]>
+            </if>
+            <if test="acc_type!=null and acc_type.toString()!=''">
+                <![CDATA[ `acc_type` = #{acc_type}, ]]>
+            </if>
+        </set>
+        <where>
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ AND `user_id` = #{user_id} ]]>
+            </if>
+        </where>
+    </update>
+
+    <!-- 更新 -->
+    <update id="updateByMap" parameterType="map">
+        <![CDATA[ UPDATE `ms_account` ]]>
+        <set>
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ `user_id` = #{user_id}, ]]>
+            </if>
+            <if test="opentime!=null and opentime.toString()!=''">
+                <![CDATA[ `opentime` = #{opentime}, ]]>
+            </if>
+            <if test="addtime!=null and addtime.toString()!=''">
+                <![CDATA[ `addtime` = #{addtime}, ]]>
+            </if>
+            <if test="uptime!=null and uptime.toString()!=''">
+                <![CDATA[ `uptime` = #{uptime}, ]]>
+            </if>
+            <if test="acc_type!=null and acc_type.toString()!=''">
+                <![CDATA[ `acc_type` = #{acc_type}, ]]>
+            </if>
+        </set>
+        <where>
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ AND `user_id` = #{user_id} ]]>
+            </if>
+        </where>
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="map">
+        <![CDATA[
+			DELETE FROM `ms_account`
+		]]>
+        <where>
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ AND `user_id` = #{user_id} ]]>
+            </if>
+        </where>
+    </delete>
+
+    <sql id="findSql">
+        <where>
+            <if test="user_id!=null and user_id.toString()!=''">
+                <![CDATA[ AND a.`user_id` = #{user_id} ]]>
+            </if>
+            <if test="user_idList!=null and user_idList.size() >= 1">
+                <![CDATA[ AND a.`id` IN ]]>
+                <foreach collection="user_idList" item="item" open="(" separator="," close=")">
+                    <![CDATA[ #{item} ]]>
+                </foreach>
+            </if>
+            <if test="opentime!=null and opentime.toString()!=''">
+                <![CDATA[ AND a.`opentime` = #{opentime} ]]>
+            </if>
+            <if test="addtime!=null and addtime.toString()!=''">
+                <![CDATA[ AND a.`addtime` = #{addtime} ]]>
+            </if>
+            <if test="uptime!=null and uptime.toString()!=''">
+                <![CDATA[ AND a.`uptime` = #{uptime} ]]>
+            </if>
+            <if test="acc_type!=null and acc_type.toString()!=''">
+                <![CDATA[ AND a.`acc_type` = #{acc_type} ]]>
+            </if>
+
+        </where>
+    </sql>
+
+    <!-- 查询行数 -->
+    <select id="getModelListCount" parameterType="map" resultType="long">
+        <![CDATA[
+			SELECT COUNT(*) FROM `ms_account` a
+		]]>
+        <include refid="findSql"/>
+    </select>
+
+    <!-- 查询记录 -->
+    <select id="getModelList" parameterType="map" resultType="com.xr.account.common.model.AccountModel">
+        <include refid="global.pageStart"/>
+        <![CDATA[
+            SELECT
+            `user_id`,
+            `opentime`,
+            `addtime`,
+            `uptime`,
+            `acc_type`
+            FROM
+            `ms_account` a
+		]]>
+        <include refid="findSql"/>
+        <include refid="global.globalSortSql"/>
+        <include refid="global.pageEnd"/>
+    </select>
+
+</mapper>
