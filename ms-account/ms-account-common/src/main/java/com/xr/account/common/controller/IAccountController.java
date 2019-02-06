@@ -3,6 +3,7 @@ package com.xr.account.common.controller;
 import com.xr.account.common.model.AccountModel;
 import com.xr.base.core.dto.ResultDto;
 import com.xr.base.jdbc.page.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,7 @@ public interface IAccountController {
    * @param entity 实体对象
    * @return AccountModel 插入成功的对象
    */
-  @RequestMapping("")
+  @RequestMapping("/account/insert")
   ResultDto<AccountModel> insert(@RequestBody AccountModel entity) throws Exception;
 
   /**
@@ -36,6 +37,7 @@ public interface IAccountController {
    * @param entityList 实体对象列表
    * @return Integer 插入成功的记录数
    */
+  @RequestMapping("/account/insert/batch")
   ResultDto<Integer> insertBatch(@RequestBody List<AccountModel> entityList) throws Exception;
 
   /**
@@ -46,6 +48,7 @@ public interface IAccountController {
    * @param entity 实体对象
    * @return AccountModel 插入/更新成功的对象
    */
+  @RequestMapping("/account/insert/update")
   ResultDto<AccountModel> insertOrUpdate(@RequestBody AccountModel entity) throws Exception;
 
   /**
@@ -56,7 +59,8 @@ public interface IAccountController {
    * @param id 主键ID
    * @return Integer 删除的行数
    */
-  ResultDto<Integer> deleteById(@RequestParam("id") Long id) throws Exception;
+  @RequestMapping("/account/delete/{id}")
+  ResultDto<Integer> deleteById(@PathVariable("id") Long id) throws Exception;
 
   /**
    * <p>
@@ -66,17 +70,19 @@ public interface IAccountController {
    * @param columnMap 表字段 map 对象
    * @return Integer 删除的行数
    */
+  @RequestMapping("/account/delete")
   ResultDto<Integer> deleteByMap(@RequestBody Map<String, Object> columnMap) throws Exception;
 
   /**
    * <p>
-   * 根据 ID 选择修改
+   * 修改
    * </p>
    *
    * @param entity 实体对象
    * @return AccountModel 更新的行数
    */
-  ResultDto<Integer> updateById(@RequestBody AccountModel entity) throws Exception;
+  @RequestMapping("/account/update")
+  ResultDto<Integer> update(@RequestBody AccountModel entity) throws Exception;
 
   /**
    * <p>
@@ -87,18 +93,8 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return AccountModel
    */
-  ResultDto<AccountModel> selectById(@RequestParam("id") Long id, @RequestParam("master") boolean master) throws Exception;
-
-  /**
-   * <p>
-   * 查询（根据ID 批量查询）
-   * </p>
-   *
-   * @param idList 主键ID列表
-   * @param master 主节点 or 从节点
-   * @return List<AccountModel>
-   */
-  ResultDto<List<AccountModel>> selectBatchIds(@RequestBody List<Long> idList, @RequestParam("master") boolean master) throws Exception;
+  @RequestMapping("/account/select/{master}/{id}")
+  ResultDto<AccountModel> selectById(@PathVariable("id") Long id, @PathVariable("master") boolean master) throws Exception;
 
   /**
    * <p>
@@ -109,6 +105,7 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return List<AccountModel>
    */
+  @RequestMapping("/account/select/list")
   ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
 
   /**
@@ -120,6 +117,7 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return AccountModel
    */
+  @RequestMapping("/account/select/one")
   ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
 
   /**
@@ -131,6 +129,7 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return Map<String,Object>
    */
+  @RequestMapping("/account/select/map")
   ResultDto<Map<String, Object>> selectMap(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
 
   /**
@@ -142,6 +141,7 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return long
    */
+  @RequestMapping("/account/select/count")
   ResultDto<Long> selectCount(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
 
   /**
@@ -153,6 +153,7 @@ public interface IAccountController {
    * @param master 主节点 or 从节点
    * @return
    */
+  @RequestMapping("/account/select/page")
   ResultDto<Page<AccountModel>> selectPage(@RequestBody Map<String, Object> columnMap, @RequestParam("master") boolean master) throws Exception;
 
 }

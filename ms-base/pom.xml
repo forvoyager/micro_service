@@ -15,8 +15,8 @@
 
   <name>ms-base Maven Webapp</name>
   <modules>
-    <module>ms-base-jdbc</module>
     <module>ms-base-common</module>
+    <module>ms-base-jdbc</module>
   </modules>
 
   <dependencies>

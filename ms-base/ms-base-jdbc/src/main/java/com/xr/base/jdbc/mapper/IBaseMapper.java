@@ -43,13 +43,13 @@ public interface IBaseMapper<T> {
 
   /**
    * <p>
-   * 根据 ID 选择修改
+   * 修改
    * </p>
    *
    * @param entity 实体对象
    * @return T 更新的行数
    */
-  Integer updateById(T entity);
+  Integer update(T entity);
 
   /**
    * <p>

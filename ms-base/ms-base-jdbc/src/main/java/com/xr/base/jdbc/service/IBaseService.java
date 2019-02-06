@@ -68,16 +68,6 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 根据 columnMap 条件，删除记录
-   * </p>
-   *
-   * @param columnMap 表字段 map 对象
-   * @return Integer 删除的行数
-   */
-  Integer deleteByMap(Map<String, Object> columnMap) throws Exception;
-
-  /**
-   * <p>
    * 删除（根据ID 批量删除）
    * </p>
    *
@@ -88,13 +78,23 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 根据 ID 选择修改
+   * 根据 columnMap 条件，删除记录
+   * </p>
+   *
+   * @param columnMap 表字段 map 对象
+   * @return Integer 删除的行数
+   */
+  Integer deleteByMap(Map<String, Object> columnMap) throws Exception;
+
+  /**
+   * <p>
+   * 修改
    * </p>
    *
    * @param entity 实体对象
    * @return T 更新的行数
    */
-  Integer updateById(T entity) throws Exception;
+  Integer update(T entity) throws Exception;
 
   /**
    * <p>
@@ -119,14 +119,14 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 查询（根据ID 批量查询）
+   * 根据 Wrapper，查询一条记录
    * </p>
    *
-   * @param idList 主键ID列表
+   * @param columnMap 表字段 map 对象
    * @param cluster 主节点 or 从节点
-   * @return List<T>
+   * @return T
    */
-  List<T> selectBatchIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception;
+  T selectOne(Map<String, Object> columnMap, Cluster cluster) throws Exception;
 
   /**
    * <p>
@@ -138,17 +138,6 @@ public interface IBaseService<T> extends IService {
    * @return List<T>
    */
   List<T> selectList(Map<String, Object> columnMap, Cluster cluster) throws Exception;
-
-  /**
-   * <p>
-   * 根据 Wrapper，查询一条记录
-   * </p>
-   *
-   * @param columnMap 表字段 map 对象
-   * @param cluster 主节点 or 从节点
-   * @return T
-   */
-  T selectOne(Map<String, Object> columnMap, Cluster cluster) throws Exception;
 
   /**
    * <p>

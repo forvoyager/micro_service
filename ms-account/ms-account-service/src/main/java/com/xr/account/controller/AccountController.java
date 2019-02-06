@@ -50,17 +50,12 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<Integer> updateById(@RequestBody AccountModel entity) throws Exception {
+  public ResultDto<Integer> update(@RequestBody AccountModel entity) throws Exception {
     return null;
   }
 
   @Override
   public ResultDto<AccountModel> selectById(@RequestParam("id") Long id, @RequestParam("master") boolean master) throws Exception {
-    return null;
-  }
-
-  @Override
-  public ResultDto<List<AccountModel>> selectBatchIds(@RequestBody List<Long> idList, @RequestParam("master") boolean master) throws Exception {
     return null;
   }
 

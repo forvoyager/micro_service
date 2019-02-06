@@ -54,7 +54,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
           /*
            * 更新成功直接返回，失败执行插入逻辑
            */
-        if (1 == updateById(entity)) {
+        if (1 == update(entity)) {
           // do nothing
         } else {
           entity = insert(entity);
@@ -86,8 +86,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public Integer updateById(T entity) throws Exception {
-    return this.baseMapper.updateById(entity);
+  public Integer update(T entity) throws Exception {
+    return this.baseMapper.update(entity);
   }
 
   @Override
@@ -98,11 +98,6 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   @Override
   public T selectById(Serializable id, Cluster cluster) throws Exception {
     return this.baseMapper.selectById(id);
-  }
-
-  @Override
-  public List<T> selectBatchIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception {
-    return this.baseMapper.selectList(MapUtils.newHashMap("idList", idList));
   }
 
   @Override

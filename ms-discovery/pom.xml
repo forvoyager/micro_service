@@ -14,6 +14,9 @@
   <packaging>pom</packaging>
 
   <name>ms-discovery Maven Webapp</name>
+  <modules>
+    <module>ms-discovery-eureka</module>
+  </modules>
 
   <dependencies>
   </dependencies>

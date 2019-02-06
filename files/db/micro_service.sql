@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `ms_account_db`.`ms_account` (
   `frozen` DECIMAL(11,2) NOT NULL DEFAULT 0.0 COMMENT '冻结金额',
   `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`user_id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB COMMENT '账户信息';
 
 USE `ms_storage_db` ;
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `ms_storage_db`.`ms_storage` (
   `count` INT NOT NULL DEFAULT 0 COMMENT '库存数量',
   `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`commodity_id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB COMMENT '商品库存信息';
 
 USE `ms_order_db` ;
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `ms_order_db`.`ms_order` (
   `trade_time` INT NOT NULL DEFAULT 0 COMMENT '成交时间（秒数）',
   `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`user_id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB COMMENT '商品购买信息';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
