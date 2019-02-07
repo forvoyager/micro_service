@@ -11,7 +11,7 @@ public class AccountModel extends BaseModel {
   /**
    * 用户ID
    */
-  private Long userId;
+  private Long user_id;
 
   /**
    * 账户余额
@@ -23,12 +23,12 @@ public class AccountModel extends BaseModel {
    */
   private Double frozen;
 
-  public Long getUserId() {
-    return userId;
+  public Long getUser_id() {
+    return user_id;
   }
 
-  public void setUserId(Long userId) {
-    this.userId = userId;
+  public void setUser_id(Long user_id) {
+    this.user_id = user_id;
   }
 
   public Double getBlance() {

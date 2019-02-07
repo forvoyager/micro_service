@@ -16,6 +16,7 @@
   <name>ms-discovery Maven Webapp</name>
   <modules>
     <module>ms-discovery-eureka</module>
+    <module>ms-discovery-client-starter</module>
   </modules>
 
   <dependencies>
