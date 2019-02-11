@@ -3,7 +3,7 @@ package com.xr.base.core.model;
 import java.io.Serializable;
 
 /**
- * Created by yangchangyan@yijiedai.com on 2019-02-01 11:34.
+ * Created by forvoyager@outlook.com on 2019-02-01 11:34.
  */
 public class BaseModel implements Serializable {
 

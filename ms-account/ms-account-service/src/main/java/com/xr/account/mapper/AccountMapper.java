@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * <b>description</b>：账户信息 相关操作mapper <br>
  * <b>time</b>：2019-02-01 11:41 <br>
- * <b>author</b>：yangchangyan@yijiedai.com
+ * <b>author</b>：forvoyager@outlook.com
  */
 @Mapper
 public interface AccountMapper extends IBaseMapper<AccountModel> {

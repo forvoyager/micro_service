@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 /**
  * <b>description</b>：账户服务配置 <br>
- * <b>author</b>：yangchangyan@yijiedai.com
+ * <b>author</b>：forvoyager@outlook.com
  * <b>time</b>：2019-02-01 11:41 <br>
  */
 @Configuration

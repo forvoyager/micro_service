@@ -17,6 +17,7 @@
   <modules>
     <module>ms-base-common</module>
     <module>ms-base-jdbc</module>
+    <module>ms-base-web</module>
   </modules>
 
   <dependencies>

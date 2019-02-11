@@ -7,11 +7,11 @@
   </sql>
 
   <resultMap id="Base_Result_Map" type="com.xr.account.common.model.AccountModel">
-    <id column="user_id" jdbcType="LONG" property="user_id"/>
+    <id column="user_id" jdbcType="BIGINT" property="user_id"/>
     <result column="balance" jdbcType="DOUBLE" property="balance"/>
     <result column="frozen" jdbcType="DOUBLE" property="frozen"/>
-    <result column="create_time" jdbcType="LONG" property="create_time"/>
-    <result column="update_time" jdbcType="LONG" property="update_time"/>
+    <result column="create_time" jdbcType="BIGINT" property="create_time"/>
+    <result column="update_time" jdbcType="BIGINT" property="update_time"/>
     <result column="version" jdbcType="INTEGER" property="version"/>
   </resultMap>
 
@@ -71,27 +71,28 @@
 
   <!-- 更新 -->
   <update id="update" parameterType="com.xr.account.common.model.AccountModel">
-    <![CDATA[ UPDATE `ms_account` ]]>
-    <set>
-      <if test="user_id!=null and user_id.toString()!=''">
-        <![CDATA[ `user_id` = #{user_id}, ]]>
-      </if>
-      <if test="opentime!=null and opentime.toString()!=''">
-        <![CDATA[ `opentime` = #{opentime}, ]]>
-      </if>
-      <if test="addtime!=null and addtime.toString()!=''">
-        <![CDATA[ `addtime` = #{addtime}, ]]>
-      </if>
-      <if test="uptime!=null and uptime.toString()!=''">
-        <![CDATA[ `uptime` = #{uptime}, ]]>
-      </if>
-      <if test="acc_type!=null and acc_type.toString()!=''">
-        <![CDATA[ `acc_type` = #{acc_type}, ]]>
-      </if>
-    </set>
+    <![CDATA[ UPDATE `ms_account` SET `version` = `version` + 1 ]]>
+    <if test="user_id != null">
+      <![CDATA[ `user_id` = #{user_id}, ]]>
+    </if>
+    <if test="balance != null">
+      <![CDATA[ `balance` = #{balance}, ]]>
+    </if>
+    <if test="frozen != null">
+      <![CDATA[ `frozen` = #{frozen}, ]]>
+    </if>
+    <if test="create_time != null">
+      <![CDATA[ `create_time` = #{create_time}, ]]>
+    </if>
+    <if test="update_time != null">
+      <![CDATA[ `update_time` = #{update_time}, ]]>
+    </if>
     <where>
-      <if test="user_id!=null and user_id.toString()!=''">
+      <if test="user_id != null">
         <![CDATA[ AND `user_id` = #{user_id} ]]>
+      </if>
+      <if test="where_version != null">
+        <![CDATA[ AND `version` = #{where_version} ]]>
       </if>
     </where>
   </update>

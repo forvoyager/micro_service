@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * <b>description</b>：Account 相关操作feign客户端配置信息 <br>
  * <b>time</b>：2019-02-01 11:41 <br>
- * <b>author</b>：yangchangyan@yijiedai.com
+ * <b>author</b>：forvoyager@outlook.com
  */
 @ConfigurationProperties(prefix = AccountClientProperties.PREFIX)
 public class AccountClientProperties {

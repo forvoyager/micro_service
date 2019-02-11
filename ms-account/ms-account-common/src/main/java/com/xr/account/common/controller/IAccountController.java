@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * <b>description</b>：账户信息 restful接口 <br>
  * <b>time</b>：2019-02-01 11:41 <br>
- * <b>author</b>：yangchangyan@yijiedai.com
+ * <b>author</b>：forvoyager@outlook.com
  */
 public interface IAccountController {
 

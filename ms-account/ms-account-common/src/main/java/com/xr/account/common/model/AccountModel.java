@@ -5,7 +5,7 @@ import com.xr.base.core.model.BaseModel;
 /**
  * <b>description</b>：账户信息 <br>
  * <b>time</b>：2019-02-01 11:41 <br>
- * <b>author</b>：yangchangyan@yijiedai.com
+ * <b>author</b>：forvoyager@outlook.com
  */
 public class AccountModel extends BaseModel {
   /**

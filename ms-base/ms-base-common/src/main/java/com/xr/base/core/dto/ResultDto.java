@@ -4,12 +4,13 @@ import com.xr.base.core.enums.ResultCodeEnum;
 import com.xr.base.core.util.DateUtil;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * 统一响应信息格式
  *
- * Created by yangchangyan@yijiedai.com on 2019-02-01 11:54.
+ * Created by forvoyager@outlook.com on 2019-02-01 11:54.
  */
 public class ResultDto<T> implements Serializable{
   /**
@@ -89,6 +90,14 @@ public class ResultDto<T> implements Serializable{
 
   public void setExtData(Map extData) {
     this.extData = extData;
+  }
+
+  public void putExtData(String key, Object data) {
+    if(this.extData == null){
+      this.extData = new HashMap();
+    }
+
+    this.extData.put(key, data);
   }
 
   public Long getTime() {
