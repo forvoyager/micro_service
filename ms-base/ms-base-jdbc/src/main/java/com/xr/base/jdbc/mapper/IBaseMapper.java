@@ -17,9 +17,8 @@ public interface IBaseMapper<T> {
    * </p>
    *
    * @param entity 实体对象
-   * @return T 插入成功的对象
    */
-  T insert(T entity);
+  void insert(T entity);
 
   /**
    * <p>
@@ -27,9 +26,8 @@ public interface IBaseMapper<T> {
    * </p>
    *
    * @param entityList 实体对象列表
-   * @return Integer 插入成功的记录数
    */
-  Integer insertBatch(List<T> entityList);
+  void insertBatch(List<T> entityList);
 
   /**
    * <p>

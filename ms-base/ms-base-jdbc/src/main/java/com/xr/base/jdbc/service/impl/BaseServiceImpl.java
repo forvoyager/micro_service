@@ -30,9 +30,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
   @Override
   public T insert(T entity) throws Exception {
-    if (null == this.baseMapper.insert(entity)) {
-      throw new IllegalStateException("insert failed.");
-    }
+    this.baseMapper.insert(entity);
     return entity;
   }
 
@@ -41,7 +39,8 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
     if (CollectionUtils.isEmpty(entityList)) {
       throw new IllegalArgumentException("Error: entityList must not be empty");
     }
-    return this.baseMapper.insertBatch(entityList);
+    this.baseMapper.insertBatch(entityList);
+    return entityList.size();
   }
 
   @Override
@@ -88,11 +87,6 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   @Override
   public Integer update(T entity) throws Exception {
     return this.baseMapper.update(entity);
-  }
-
-  @Override
-  public Integer updateBatchById(List<T> entityList) throws Exception {
-    return null;
   }
 
   @Override
