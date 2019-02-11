@@ -21,25 +21,17 @@ public final class ReflectUtils {
   public static String getMethodCapitalize(Field field, final String str) {
     Class<?> fieldType = field.getType();
     // fix #176
-    return boolean.class.equals(fieldType) ? "is" : "get" + str;
+    return boolean.class.equals(fieldType) ? "is" : "get" + upperFirstChar(str);
   }
 
-  /**
-   * <p>
-   * 获取 public get方法的值
-   * </p>
-   *
-   * @param cls
-   * @param entity 实体
-   * @param str    属性字符串内容
-   * @return Object
-   */
-  public static Object getMethodValue(Class<?> cls, Object entity, String str) throws Exception {
-    Map<String, Field> fieldMaps = getFieldMap(cls);
-    AssertUtils.notEmpty(fieldMaps, String.format("Error: NoSuchField in %s for %s.  Cause:", cls.getSimpleName(), str));
-
-    Method method = cls.getMethod(getMethodCapitalize(fieldMaps.get(str), str));
-    return method.invoke(entity);
+  private static String upperFirstChar(String str){
+    char[] chars = str.toCharArray();
+    if(Character.isUpperCase(chars[0])){
+      return str;
+    } else {
+      chars[0] = Character.toUpperCase(chars[0]);
+      return new String(chars);
+    }
   }
 
   /**
@@ -55,7 +47,14 @@ public final class ReflectUtils {
     if (null == entity) {
       return null;
     }
-    return getMethodValue(entity.getClass(), entity, str);
+
+    Class<?> cls = entity.getClass();
+
+    Map<String, Field> fieldMaps = getFieldMap(cls);
+    AssertUtils.notEmpty(fieldMaps, String.format("Error: NoSuchField in %s for %s.  Cause:", cls.getSimpleName(), str));
+
+    Method method = cls.getMethod(getMethodCapitalize(fieldMaps.get(str), str));
+    return method.invoke(entity);
   }
 
   /**

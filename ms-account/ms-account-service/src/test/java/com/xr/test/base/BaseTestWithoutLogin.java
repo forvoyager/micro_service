@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +60,23 @@ public abstract class BaseTestWithoutLogin {
   }
 
   protected String requestBody(String url, Map<String, Object> param) throws Exception {
+    MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+      .get(url)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      ;
+
+    requestBuilder.content(JsonUtils.toJson(param));
+
+    String result = mvc.perform(requestBuilder
+      .accept(MediaType.APPLICATION_JSON))
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.content().string(Matchers.anything())).toString();
+
+    return result;
+  }
+
+  protected String requestBodyList(String url, List<Object> param) throws Exception {
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
       .get(url)
       .contentType(MediaType.APPLICATION_JSON_UTF8)

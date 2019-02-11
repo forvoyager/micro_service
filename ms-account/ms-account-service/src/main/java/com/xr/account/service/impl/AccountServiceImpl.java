@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl extends BaseServiceImpl<AccountMapper, AccountModel> implements IAccountService {
   @Override
   protected String getPrimaryKeyName() {
-    return "userId";
+    return "user_id";
   }
 }

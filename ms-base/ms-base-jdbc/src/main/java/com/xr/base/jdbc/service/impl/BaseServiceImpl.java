@@ -46,7 +46,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   @Override
   public T insertOrUpdate(T entity) throws Exception {
     if(entity != null){
-      Object idVal = ReflectUtils.getMethodValue(entity.getClass(), entity, this.getPrimaryKeyName());
+      Object idVal = ReflectUtils.getMethodValue(entity, this.getPrimaryKeyName());
       if (StringUtils.isEmpty(idVal)) {
         entity = insert(entity);
       } else {

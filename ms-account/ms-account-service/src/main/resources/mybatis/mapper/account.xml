@@ -57,9 +57,9 @@
 
   <!-- 批量插入 -->
   <insert id="insertBatch" parameterType="map">
-    <![CDATA[ INSERT INTO `ms_account` (`user_id`, `balance`, `frozen`, `create_time`, `update_time`, `version`) VALUES ]]>
+    <![CDATA[ INSERT INTO `ms_account` (`user_id`, `balance`, `frozen`, `create_time`, `update_time`) VALUES ]]>
     <foreach collection="list" separator="," item="item">
-      (#{item.user_id}, #{item.balance}, #{item.frozen}, #{item.create_time}, #{item.update_time}, #{item.version})
+      (#{item.user_id}, #{item.balance}, #{item.frozen}, #{item.create_time}, #{item.update_time})
     </foreach>
   </insert>
 
@@ -92,27 +92,27 @@
 
   <!-- 更新 -->
   <update id="updateByMap" parameterType="map">
-    <![CDATA[ UPDATE `ms_account` ]]>
-    <set>
-      <if test="user_id!=null and user_id.toString()!=''">
+    <![CDATA[ UPDATE `ms_account` SET `version` = `version` + 1, ]]>
+    <trim suffixOverrides=",">
+      <if test="user_id != null">
         <![CDATA[ `user_id` = #{user_id}, ]]>
       </if>
-      <if test="opentime!=null and opentime.toString()!=''">
-        <![CDATA[ `opentime` = #{opentime}, ]]>
+      <if test="balance != null">
+        <![CDATA[ `balance` = #{balance}, ]]>
       </if>
-      <if test="addtime!=null and addtime.toString()!=''">
-        <![CDATA[ `addtime` = #{addtime}, ]]>
+      <if test="frozen != null">
+        <![CDATA[ `frozen` = #{frozen}, ]]>
       </if>
-      <if test="uptime!=null and uptime.toString()!=''">
-        <![CDATA[ `uptime` = #{uptime}, ]]>
+      <if test="update_time != null">
+        <![CDATA[ `update_time` = #{update_time}, ]]>
       </if>
-      <if test="acc_type!=null and acc_type.toString()!=''">
-        <![CDATA[ `acc_type` = #{acc_type}, ]]>
-      </if>
-    </set>
+    </trim>
     <where>
-      <if test="user_id!=null and user_id.toString()!=''">
+      <if test="user_id != null">
         <![CDATA[ AND `user_id` = #{user_id} ]]>
+      </if>
+      <if test="where_version != null">
+        <![CDATA[ AND `version` = #{where_version} ]]>
       </if>
     </where>
   </update>
@@ -123,7 +123,7 @@
 			DELETE FROM `ms_account`
 		]]>
     <where>
-      <if test="user_id!=null and user_id.toString()!=''">
+      <if test="user_id != null">
         <![CDATA[ AND `user_id` = #{user_id} ]]>
       </if>
     </where>
