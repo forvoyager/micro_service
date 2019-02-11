@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS `ms_account_db`.`ms_account` (
   `user_id` INT NOT NULL COMMENT '用户ID',
   `balance` DECIMAL(11,2) NOT NULL DEFAULT 0.0 COMMENT '余额',
   `frozen` DECIMAL(11,2) NOT NULL DEFAULT 0.0 COMMENT '冻结金额',
+  `create_time` INT NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB COMMENT '账户信息';

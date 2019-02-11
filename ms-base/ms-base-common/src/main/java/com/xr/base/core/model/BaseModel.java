@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class BaseModel implements Serializable {
 
   protected Long create_time;
-  protected Long update_tiem;
+  protected Long update_time;
   protected Integer version;
   protected Integer where_version;
 
@@ -20,12 +20,12 @@ public class BaseModel implements Serializable {
     this.create_time = create_time;
   }
 
-  public Long getUpdate_tiem() {
-    return update_tiem;
+  public Long getUpdate_time() {
+    return update_time;
   }
 
-  public void setUpdate_tiem(Long update_tiem) {
-    this.update_tiem = update_tiem;
+  public void setUpdate_time(Long update_time) {
+    this.update_time = update_time;
   }
 
   public Integer getVersion() {

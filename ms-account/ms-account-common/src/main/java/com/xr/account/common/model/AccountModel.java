@@ -16,7 +16,7 @@ public class AccountModel extends BaseModel {
   /**
    * 账户余额
    */
-  private Double blance;
+  private Double balance;
 
   /**
    * 冻结金额
@@ -31,12 +31,12 @@ public class AccountModel extends BaseModel {
     this.user_id = user_id;
   }
 
-  public Double getBlance() {
-    return blance;
+  public Double getBalance() {
+    return balance;
   }
 
-  public void setBlance(Double blance) {
-    this.blance = blance;
+  public void setBalance(Double balance) {
+    this.balance = balance;
   }
 
   public Double getFrozen() {

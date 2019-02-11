@@ -34,9 +34,6 @@
       <if test="update_time != null">
         <![CDATA[ `update_time`, ]]>
       </if>
-      <if test="version != null">
-        <![CDATA[ `version`, ]]>
-      </if>
     </trim>
     <![CDATA[ VALUES ]]>
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -55,9 +52,6 @@
       <if test="update_time != null">
         <![CDATA[ #{update_time}, ]]>
       </if>
-      <if test="version != null">
-        <![CDATA[ #{version}, ]]>
-      </if>
     </trim>
   </insert>
 
@@ -71,22 +65,21 @@
 
   <!-- 更新 -->
   <update id="update" parameterType="com.xr.account.common.model.AccountModel">
-    <![CDATA[ UPDATE `ms_account` SET `version` = `version` + 1 ]]>
-    <if test="user_id != null">
-      <![CDATA[ `user_id` = #{user_id}, ]]>
-    </if>
-    <if test="balance != null">
-      <![CDATA[ `balance` = #{balance}, ]]>
-    </if>
-    <if test="frozen != null">
-      <![CDATA[ `frozen` = #{frozen}, ]]>
-    </if>
-    <if test="create_time != null">
-      <![CDATA[ `create_time` = #{create_time}, ]]>
-    </if>
-    <if test="update_time != null">
-      <![CDATA[ `update_time` = #{update_time}, ]]>
-    </if>
+    <![CDATA[ UPDATE `ms_account` SET `version` = `version` + 1, ]]>
+    <trim suffixOverrides=",">
+      <if test="user_id != null">
+        <![CDATA[ `user_id` = #{user_id}, ]]>
+      </if>
+      <if test="balance != null">
+        <![CDATA[ `balance` = #{balance}, ]]>
+      </if>
+      <if test="frozen != null">
+        <![CDATA[ `frozen` = #{frozen}, ]]>
+      </if>
+      <if test="update_time != null">
+        <![CDATA[ `update_time` = #{update_time}, ]]>
+      </if>
+    </trim>
     <where>
       <if test="user_id != null">
         <![CDATA[ AND `user_id` = #{user_id} ]]>
@@ -163,28 +156,28 @@
     </where>
   </sql>
 
-  <!-- 查询行数 -->
-  <select id="getModelListCount" parameterType="map" resultType="long">
-    <![CDATA[
-			SELECT COUNT(*) FROM `ms_account` a
-		]]>
-    <include refid="findSql"/>
-  </select>
+  <!--&lt;!&ndash; 查询行数 &ndash;&gt;-->
+  <!--<select id="getModelListCount" parameterType="map" resultType="long">-->
+    <!--<![CDATA[-->
+			<!--SELECT COUNT(*) FROM `ms_account` a-->
+		<!--]]>-->
+    <!--<include refid="findSql"/>-->
+  <!--</select>-->
 
-  <!-- 查询记录 -->
-  <select id="getModelList" parameterType="map" resultType="com.xr.account.common.model.AccountModel">
-    <include refid="global.pageStart"/>
-    <![CDATA[
-            SELECT
-            `user_id`,
-            `opentime`,
-            `addtime`,
-            `uptime`,
-            `acc_type`
-            FROM
-            `ms_account` a
-		]]>
-    <include refid="findSql"/>
-  </select>
+  <!--&lt;!&ndash; 查询记录 &ndash;&gt;-->
+  <!--<select id="getModelList" parameterType="map" resultType="com.xr.account.common.model.AccountModel">-->
+    <!--<include refid="global.pageStart"/>-->
+    <!--<![CDATA[-->
+            <!--SELECT-->
+            <!--`user_id`,-->
+            <!--`opentime`,-->
+            <!--`addtime`,-->
+            <!--`uptime`,-->
+            <!--`acc_type`-->
+            <!--FROM-->
+            <!--`ms_account` a-->
+		<!--]]>-->
+    <!--<include refid="findSql"/>-->
+  <!--</select>-->
 
 </mapper>
