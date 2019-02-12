@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -56,11 +58,11 @@ public interface IAccountController {
    * 根据 ID 删除
    * </p>
    *
-   * @param id 主键ID
+   * @param user_id 主键ID
    * @return Integer 删除的行数
    */
-  @RequestMapping("/account/delete/{id}")
-  ResultDto<Integer> deleteById(@PathVariable("id") long id) throws Exception;
+  @RequestMapping("/account/delete/{user_id}")
+  ResultDto<Integer> deleteById(@PathVariable("user_id") long user_id) throws Exception;
 
   /**
    * <p>
@@ -75,26 +77,49 @@ public interface IAccountController {
 
   /**
    * <p>
-   * 修改
+   * 根据model条件 修改
    * </p>
    *
    * @param entity 实体对象
    * @return AccountModel 更新的行数
    */
-  @RequestMapping("/account/update")
+  @RequestMapping("/account/update/model")
   ResultDto<Integer> update(@RequestBody AccountModel entity) throws Exception;
+
+  /**
+   * <p>
+   * 根据map条件 修改
+   * </p>
+   *
+   * @param columnMap 表字段 map 对象
+   * @return Integer 修改的行数
+   */
+  @RequestMapping("/account/update/map")
+  ResultDto<Integer> updateByMap(@RequestBody Map<String, Object> columnMap) throws Exception;
 
   /**
    * <p>
    * 根据 ID 查询
    * </p>
    *
-   * @param id 主键ID
+   * @param user_id 主键ID
    * @param master 主节点 or 从节点
    * @return AccountModel
    */
-  @RequestMapping("/account/select/{master}/{id}")
-  ResultDto<AccountModel> selectById(@PathVariable("id") long id, @PathVariable("master") Cluster master) throws Exception;
+  @RequestMapping("/account/select/{master}/{user_id}")
+  ResultDto<AccountModel> selectById(@PathVariable("user_id") long user_id, @PathVariable("master") Cluster master) throws Exception;
+
+  /**
+   * <p>
+   * 根据 ID 批量查询
+   * </p>
+   *
+   * @param idList 主键ID列表
+   * @param master 主节点 or 从节点
+   * @return AccountModel
+   */
+  @RequestMapping("/account/select/{master}/batch")
+  ResultDto<List<AccountModel>> selectBatchIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
@@ -130,7 +155,7 @@ public interface IAccountController {
    * @return Map<String,Object>
    */
   @RequestMapping("/account/select/{master}/map")
-  ResultDto<Map<String, Object>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
+  ResultDto<Map<String, AccountModel>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>

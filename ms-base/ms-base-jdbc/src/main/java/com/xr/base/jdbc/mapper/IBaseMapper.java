@@ -37,7 +37,7 @@ public interface IBaseMapper<T> {
    * @param columnMap 表字段 map 对象
    * @return Integer 删除的行数
    */
-  Integer delete(Map<String, Object> columnMap);
+  int delete(Map<String, Object> columnMap);
 
   /**
    * <p>
@@ -47,7 +47,15 @@ public interface IBaseMapper<T> {
    * @param entity 实体对象
    * @return T 更新的行数
    */
-  Integer update(T entity);
+  int update(T entity);
+
+  /**
+   * 根据传入的map参数进行更新
+   *
+   * @param columnMap 参数
+   * @return
+   */
+  int updateByMap(Map<String, Object> columnMap);
 
   /**
    * <p>

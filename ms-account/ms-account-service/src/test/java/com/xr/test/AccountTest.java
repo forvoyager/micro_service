@@ -15,57 +15,88 @@ import java.util.Map;
 public class AccountTest extends BaseTestWithoutLogin {
 
   @Test
-  public void test_insert() throws Exception {
+  public void insert() throws Exception {
     Map<String, Object> param = new HashMap<>();
     param.put("user_id", "6666");
     param.put("balance", "100.0");
     param.put("frozen", "10.0");
-    param.put("create_time", "333333");
-    param.put("update_time", "22222");
+    param.put("create_time", currentTimeInSecond);
+    param.put("update_time", currentTimeInSecond);
     param.put("version", "22222");
     this.requestBody("/account/insert", param);
   }
 
   @Test
-  public void test_insertBatch() throws Exception {
+  public void insertBatch() throws Exception {
     List list = new ArrayList<>();
     Map<String, Object> param = new HashMap<>();
     param.put("user_id", "1");
-    param.put("balance", "1.0");
-    param.put("frozen", "1.0");
-    param.put("create_time", "1");
-    param.put("update_time", "1");
+    param.put("balance", "100.0");
+    param.put("frozen", "10.0");
+    param.put("create_time", currentTimeInSecond);
+    param.put("update_time", currentTimeInSecond);
     param.put("version", "1");
     list.add(param);
 
     param = new HashMap<>();
     param.put("user_id", "2");
-    param.put("balance", "6666666.0");
-    param.put("frozen", "2.0");
-    param.put("create_time", "2");
-    param.put("update_time", "2");
+    param.put("balance", "200.0");
+    param.put("frozen", "20.0");
+    param.put("create_time", currentTimeInSecond);
+    param.put("update_time", currentTimeInSecond);
     param.put("version", "2");
     list.add(param);
 
-    this.requestBodyList("/account/insert/batch", list);
+    this.requestBody("/account/insert/batch", list);
   }
 
   @Test
-  public void test_update() throws Exception {
-    Map<String, Object> param = new HashMap<>();
-    param.put("user_id", "6666");
-    param.put("balance", "1.0");
-    param.put("update_time", DateUtil.currentTimeInSecond());
-    param.put("where_version", "4");
-    this.requestBody("/account/update", param);
-  }
-
-  @Test
-  public void test_insertOrUpdate() throws Exception {
+  public void insertOrUpdate() throws Exception {
     Map<String, Object> param = new HashMap<>();
     param.put("user_id", "6666");
     param.put("frozen", "10000.0");
-    param.put("where_version", "5");
+//    param.put("where_version", "0");
     this.requestBody("/account/insert/update", param);
+  }
+
+  @Test
+  public void deleteById() throws Exception {
+    Map<String, Object> param = new HashMap<>();
+    param.put("user_id", "1");
+    this.requestRestful("/account/delete/{user_id}", param);
+  }
+
+  @Test
+  public void deleteByMap() throws Exception {
+    Map<String, Object> param = new HashMap<>();
+    param.put("id", "1");
+    this.requestBody("/account/delete", param);
+  }
+
+  @Test
+  public void update() throws Exception {
+    Map<String, Object> param = new HashMap<>();
+    param.put("user_id", "6666");
+    param.put("balance", "1.0");
+    param.put("update_time", currentTimeInSecond);
+    param.put("where_version", "4");
+    this.requestBody("/account/update/model", param);
+  }
+
+  @Test
+  public void updateByMap() throws Exception {
+    Map<String, Object> param = new HashMap<>();
+    param.put("user_id", "6666");
+    param.put("balance", "1.0");
+    param.put("update_time", currentTimeInSecond);
+    param.put("where_version", "4");
+    this.requestBody("/account/update/map", param);
+  }
+
+  @Test
+  public void selectById() throws Exception {
+    Map<String, Object> param = new HashMap<>();
+    param.put("id", "1");
+    this.requestRestful("/account/select/{master}/{user_id}", param);
   }
 }

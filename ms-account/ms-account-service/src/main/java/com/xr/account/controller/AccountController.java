@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +43,8 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<Integer> deleteById(@PathVariable("id") long id) throws Exception {
-    return ResultDto.success("成功", accountService.deleteById(id));
+  public ResultDto<Integer> deleteById(@PathVariable("user_id") long user_id) throws Exception {
+    return ResultDto.success("成功", accountService.deleteById(user_id));
   }
 
   @Override
@@ -56,8 +58,18 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<AccountModel> selectById(@PathVariable("id") long id, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success("成功", accountService.selectById(id, master));
+  public ResultDto<Integer> updateByMap(@RequestBody Map<String, Object> columnMap) throws Exception {
+    return ResultDto.success("成功", accountService.updateByMap(columnMap));
+  }
+
+  @Override
+  public ResultDto<AccountModel> selectById(@PathVariable("user_id") long user_id, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectById(user_id, master));
+  }
+
+  @Override
+  public ResultDto<List<AccountModel>> selectBatchIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectBatchIds(idList, master));
   }
 
   @Override
@@ -71,7 +83,7 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<Map<String, Object>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
+  public ResultDto<Map<String, AccountModel>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
     return ResultDto.success("成功", accountService.selectMap(columnMap, master));
   }
 

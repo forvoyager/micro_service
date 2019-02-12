@@ -38,7 +38,7 @@ public interface IBaseService<T> extends IService {
    * @return Integer 插入成功的记录数
    */
   @Transactional(propagation = Propagation.REQUIRED)
-  Integer insertBatch(List<T> entityList) throws Exception;
+  int insertBatch(List<T> entityList) throws Exception;
 
   /**
    * <p>
@@ -53,17 +53,6 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 批量修改插入
-   * </p>
-   *
-   * @param entityList 实体对象列表
-   * @return Integer 插入/更新成功的记录数
-   */
-  @Transactional(propagation = Propagation.REQUIRED)
-  Integer insertOrUpdateBatch(List<T> entityList) throws Exception;
-
-  /**
-   * <p>
    * 根据 ID 删除
    * </p>
    *
@@ -71,7 +60,7 @@ public interface IBaseService<T> extends IService {
    * @return Integer 删除的行数
    */
   @Transactional(propagation = Propagation.REQUIRED)
-  Integer deleteById(Serializable id) throws Exception;
+  int deleteById(Serializable id) throws Exception;
 
   /**
    * <p>
@@ -82,7 +71,7 @@ public interface IBaseService<T> extends IService {
    * @return Integer 删除的行数
    */
   @Transactional(propagation = Propagation.REQUIRED)
-  Integer deleteBatchIds(Collection<? extends Serializable> idList) throws Exception;
+  int deleteBatchIds(Collection<? extends Serializable> idList) throws Exception;
 
   /**
    * <p>
@@ -93,7 +82,7 @@ public interface IBaseService<T> extends IService {
    * @return Integer 删除的行数
    */
   @Transactional(propagation = Propagation.REQUIRED)
-  Integer deleteByMap(Map<String, Object> columnMap) throws Exception;
+  int deleteByMap(Map<String, Object> columnMap) throws Exception;
 
   /**
    * <p>
@@ -104,7 +93,18 @@ public interface IBaseService<T> extends IService {
    * @return T 更新的行数
    */
   @Transactional(propagation = Propagation.REQUIRED)
-  Integer update(T entity) throws Exception;
+  int update(T entity) throws Exception;
+
+  /**
+   * <p>
+   * 根据 columnMap 条件，修改记录
+   * </p>
+   *
+   * @param columnMap 表字段 map 对象
+   * @return Integer 删除的行数
+   */
+  @Transactional(propagation = Propagation.REQUIRED)
+  int updateByMap(Map<String, Object> columnMap) throws Exception;
 
   /**
    * <p>
@@ -119,7 +119,19 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 根据 Wrapper，查询一条记录
+   * 根据 ID 批量查询
+   * </p>
+   *
+   * @param idList
+   * @param cluster
+   * @return
+   * @throws Exception
+   */
+  List<T> selectBatchIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception;
+
+  /**
+   * <p>
+   * 根据 columnMapt条件，查询一条记录
    * </p>
    *
    * @param columnMap 表字段 map 对象
@@ -148,7 +160,7 @@ public interface IBaseService<T> extends IService {
    * @param cluster 主节点 or 从节点
    * @return Map<String,Object>
    */
-  Map<String, Object> selectMap(Map<String, Object> columnMap, Cluster cluster) throws Exception;
+  Map<String, T> selectMap(Map<String, Object> columnMap, Cluster cluster) throws Exception;
 
   /**
    * <p>

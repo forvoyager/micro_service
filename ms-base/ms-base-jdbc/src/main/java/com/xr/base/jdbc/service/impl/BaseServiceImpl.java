@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 数据基础操作实现
@@ -35,7 +33,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public Integer insertBatch(List<T> entityList) throws Exception {
+  public int insertBatch(List<T> entityList) throws Exception {
     if (CollectionUtils.isEmpty(entityList)) {
       throw new IllegalArgumentException("Error: entityList must not be empty");
     }
@@ -54,7 +52,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
            * 更新成功直接返回，失败执行插入逻辑
            */
         if (1 == update(entity)) {
-          // do nothing
+          entity = selectOne(MapUtils.newHashMap(this.getPrimaryKeyName(), idVal), Cluster.master);
         } else {
           entity = insert(entity);
         }
@@ -65,33 +63,42 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public Integer insertOrUpdateBatch(List<T> entityList) throws Exception {
-    return null;
-  }
-
-  @Override
-  public Integer deleteById(Serializable id) throws Exception {
+  public int deleteById(Serializable id) throws Exception {
     return this.baseMapper.delete(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
   }
 
   @Override
-  public Integer deleteByMap(Map<String, Object> columnMap) throws Exception {
+  public int deleteByMap(Map<String, Object> columnMap) throws Exception {
     return this.baseMapper.delete(columnMap);
   }
 
   @Override
-  public Integer deleteBatchIds(Collection<? extends Serializable> idList) throws Exception {
+  public int deleteBatchIds(Collection<? extends Serializable> idList) throws Exception {
     return this.baseMapper.delete(MapUtils.newHashMap("idList", idList));
   }
 
   @Override
-  public Integer update(T entity) throws Exception {
+  public int update(T entity) throws Exception {
     return this.baseMapper.update(entity);
+  }
+
+  @Override
+  public int updateByMap(Map<String, Object> columnMap) throws Exception {
+    return this.baseMapper.updateByMap(columnMap);
   }
 
   @Override
   public T selectById(Serializable id, Cluster cluster) throws Exception {
     return this.baseMapper.selectById(id);
+  }
+
+  @Override
+  public List<T> selectBatchIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception {
+    if(CollectionUtils.isEmpty(idList)){
+      return Collections.EMPTY_LIST;
+    }
+
+    return this.baseMapper.selectList(MapUtils.newHashMap("idList", idList));
   }
 
   @Override
@@ -101,12 +108,21 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
   @Override
   public T selectOne(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    return null;
+    List<T> datas = this.baseMapper.selectList(columnMap);
+    return CollectionUtils.isEmpty(datas) ? null : datas.get(0);
   }
 
   @Override
-  public Map<String, Object> selectMap(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    return null;
+  public Map<String, T> selectMap(Map<String, Object> columnMap, Cluster cluster) throws Exception {
+
+    Map<String, T> primaryKeyMapData = new HashMap<String, T>();
+
+    List<T> datas = this.baseMapper.selectList(columnMap);
+    for(T data : datas){
+      primaryKeyMapData.put(ReflectUtils.getMethodValue(data, this.getPrimaryKeyName()).toString(), data);
+    }
+
+    return primaryKeyMapData;
   }
 
   @Override
@@ -116,6 +132,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
   @Override
   public Page<T> selectPage(Map<String, Object> columnMap, Cluster cluster) throws Exception {
+    // TODO
     return null;
   }
 

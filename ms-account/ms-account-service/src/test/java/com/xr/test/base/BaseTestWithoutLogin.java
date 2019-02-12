@@ -1,6 +1,7 @@
 package com.xr.test.base;
 
 import com.xr.account.AccountServiceApplication;
+import com.xr.base.core.util.DateUtil;
 import com.xr.base.core.util.JsonUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -29,17 +30,33 @@ import java.util.Map;
 @SpringBootTest(classes = AccountServiceApplication.class)
 @WebAppConfiguration
 public abstract class BaseTestWithoutLogin {
+
   @Autowired
-  private WebApplicationContext context;
-  private MockMvc mvc;
+  protected WebApplicationContext context;
+
+  protected MockMvc mvc;
+
+  protected long currentTimeInSecond = DateUtil.currentTimeInSecond();
 
   @Before
   public void setUp() throws Exception {
-//    mvc = MockMvcBuilders.standaloneSetup(new UniqueIdSequenceController()).build();
+    /**
+     * 方式1：测试单个controller
+     * 方式2：测试整个springboot应用，推荐使用此方法。
+     */
+//    mvc = MockMvcBuilders.standaloneSetup(new AccountController()).build();
     mvc = MockMvcBuilders.webAppContextSetup(context).build();
   }
 
-  protected String request(String url, Map<String, String> param) throws Exception {
+  /**
+   * 发送普通的请求
+   *
+   * @param url
+   * @param param
+   * @return
+   * @throws Exception
+   */
+  protected String request(String url, Map<String, Object> param) throws Exception {
 
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
       .get(url)
@@ -47,7 +64,7 @@ public abstract class BaseTestWithoutLogin {
       ;
 
     for(String key : param.keySet()){
-      requestBuilder = requestBuilder.param(key, param.get(key));
+      requestBuilder = requestBuilder.param(key, param.get(key).toString());
     }
 
     String result = mvc.perform(requestBuilder
@@ -59,6 +76,42 @@ public abstract class BaseTestWithoutLogin {
     return result;
   }
 
+  /**
+   * 向restfull风格的url发送请求
+   *
+   * @param url restful url
+   * @param param 需要替换的参数
+   * @return
+   * @throws Exception
+   */
+  protected String requestRestful(String url, Map<String, Object> param) throws Exception {
+
+    for(String key : param.keySet()){
+      url = url.replace("{"+key+"}", param.get(key).toString());
+    }
+
+    MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+      .get(url)
+      .contentType(MediaType.APPLICATION_JSON_UTF8)
+      ;
+
+    String result = mvc.perform(requestBuilder
+      .accept(MediaType.APPLICATION_JSON))
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.content().string(Matchers.anything())).toString();
+
+    return result;
+  }
+
+  /**
+   * 发送请求，并通过request body传递参数
+   *
+   * @param url
+   * @param param
+   * @return
+   * @throws Exception
+   */
   protected String requestBody(String url, Map<String, Object> param) throws Exception {
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
       .get(url)
@@ -76,7 +129,15 @@ public abstract class BaseTestWithoutLogin {
     return result;
   }
 
-  protected String requestBodyList(String url, List<Object> param) throws Exception {
+  /**
+   * 发送请求，并通过request body传递参数
+   *
+   * @param url
+   * @param param
+   * @return
+   * @throws Exception
+   */
+  protected String requestBody(String url, List<Object> param) throws Exception {
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
       .get(url)
       .contentType(MediaType.APPLICATION_JSON_UTF8)
