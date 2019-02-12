@@ -1,7 +1,7 @@
 package com.xr.test;
 
 import com.xr.account.common.model.AccountModel;
-import com.xr.base.jdbc.core.Cluster;
+import com.xr.base.core.enums.Cluster;
 import com.xr.test.base.BaseTestWithoutLogin;
 import org.junit.Test;
 

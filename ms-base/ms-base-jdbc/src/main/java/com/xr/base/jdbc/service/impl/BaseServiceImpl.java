@@ -1,9 +1,9 @@
 package com.xr.base.jdbc.service.impl;
 
+import com.xr.base.core.page.Page;
 import com.xr.base.core.util.*;
-import com.xr.base.jdbc.core.Cluster;
+import com.xr.base.core.enums.Cluster;
 import com.xr.base.jdbc.mapper.IBaseMapper;
-import com.xr.base.jdbc.page.Page;
 import com.xr.base.jdbc.service.IBaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

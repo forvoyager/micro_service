@@ -1,4 +1,4 @@
-package com.xr.base.jdbc.core;
+package com.xr.base.core.enums;
 
 /**
  * 集群节点属性

@@ -1,8 +1,8 @@
 package com.xr.base.jdbc.service;
 
+import com.xr.base.core.page.Page;
 import com.xr.base.core.service.IService;
-import com.xr.base.jdbc.core.Cluster;
-import com.xr.base.jdbc.page.Page;
+import com.xr.base.core.enums.Cluster;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 

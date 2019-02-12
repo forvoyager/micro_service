@@ -1,10 +1,11 @@
-package com.xr.base.jdbc.page;
+package com.xr.base.core.page;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * 分页信息
  * Created by forvoyager@outlook.com on 2019-01-31 13:23.
  */
 public class Page<T> {
@@ -14,7 +15,7 @@ public class Page<T> {
   /**
    * 总记录数
    */
-  private int total;
+  private int totalRecord;
 
   /**
    * 每页显示条数，默认 10
@@ -24,29 +25,29 @@ public class Page<T> {
   /**
    * 总页数
    */
-  private int pages;
+  private int totalPage;
 
   /**
-   * 当前页
+   * 当前页（默认显示第1页）
    */
-  private int current = 1;
+  private int page = 1;
 
   /**
    * 查询数据列表
    */
-  private List<T> records = Collections.emptyList();
+  private List<T> records = Collections.EMPTY_LIST;
 
   /**
    * 查询参数
    */
   private Map<String, Object> condition;
 
-  public int getTotal() {
-    return total;
+  public int getTotalRecord() {
+    return totalRecord;
   }
 
-  public void setTotal(int total) {
-    this.total = total;
+  public void setTotalRecord(int totalRecord) {
+    this.totalRecord = totalRecord;
   }
 
   public int getSize() {
@@ -57,20 +58,20 @@ public class Page<T> {
     this.size = size;
   }
 
-  public int getPages() {
-    return pages;
+  public int getTotalPage() {
+    return totalPage;
   }
 
-  public void setPages(int pages) {
-    this.pages = pages;
+  public void setTotalPage(int totalPage) {
+    this.totalPage = totalPage;
   }
 
-  public int getCurrent() {
-    return current;
+  public int getPage() {
+    return page;
   }
 
-  public void setCurrent(int current) {
-    this.current = current;
+  public void setPage(int page) {
+    this.page = page;
   }
 
   public List<T> getRecords() {

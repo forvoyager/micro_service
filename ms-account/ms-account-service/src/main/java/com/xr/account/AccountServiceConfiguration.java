@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -28,40 +29,81 @@ import javax.sql.DataSource;
 //@MapperScan(basePackageClasses = {AccountServiceConfiguration.class})
 public class AccountServiceConfiguration {
 
-  @Bean("masterDataSource_1")
-  @ConfigurationProperties("spring.datasource.druid.master.1")
+  // ------------ master datasource 1 start ---------------
+  @Bean
   @Primary
+  @ConfigurationProperties("spring.datasource.druid.master.1")
   public DataSource masterDataSource_1() {
     return DruidDataSourceBuilder.create().build();
   }
 
-  @Bean(name = "masterTransactionManager_1")
-  public DataSourceTransactionManager masterTransactionManager(@Qualifier("masterDataSource_1") DataSource dataSource) {
+  @Bean
+  @Primary
+  public DataSourceTransactionManager masterTransactionManager_1(@Qualifier("masterDataSource_1") DataSource dataSource) {
     return new DataSourceTransactionManager(dataSource);
   }
 
-  @Bean(name = "masterSqlSessionFactory_1")
+  @Bean
   @Primary
-  public SqlSessionFactory masterSqlSessionFactory(@Qualifier("masterDataSource_1") DataSource dataSource) throws Exception {
+  public SqlSessionFactory masterSqlSessionFactory_1(@Qualifier("masterDataSource_1") DataSource dataSource) throws Exception {
     final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+    // set data source
     sessionFactory.setDataSource(dataSource);
+
+    // set config location
+    sessionFactory.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
+
+    // set mapper xml location
     Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath*:mybatis/mapper/*.xml");
     sessionFactory.setMapperLocations(resources);
+
+    // set plugin
+//    PageHelper pageHelper = new PageHelper();
+//    Properties props = new Properties();
+//    props.setProperty("dialect", "mysql");
+//    props.setProperty("reasonable", "true");
+//    props.setProperty("supportMethodsArguments", "true");
+//    props.setProperty("returnPageInfo", "check");
+//    props.setProperty("params", "count=countSql");
+//    pageHelper.setProperties(props);
+//    sessionFactory.setPlugins(new Interceptor[]{pageHelper});
+
     return sessionFactory.getObject();
   }
+  // ------------ master datasource 1 end ---------------
 
-  @Bean("slaveDatasource_1")
+
+  // ------------ slave datasource 1 start ---------------
+  @Bean
   @ConfigurationProperties("spring.datasource.druid.slave.1")
   public DataSource slaveDataSource_1() {
     return DruidDataSourceBuilder.create().build();
   }
 
-  @Bean("slaveDatasource_2")
-  @ConfigurationProperties("spring.datasource.druid.slave.2")
-  public DataSource slaveDataSource_2() {
-    return DruidDataSourceBuilder.create().build();
+  @Bean
+  public DataSourceTransactionManager slaveTransactionManager_1(@Qualifier("slaveDataSource_1") DataSource dataSource) {
+    return new DataSourceTransactionManager(dataSource);
   }
 
+  @Bean
+  public SqlSessionFactory slaveSqlSessionFactory_1(@Qualifier("slaveDataSource_1") DataSource dataSource) throws Exception {
+    final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+    // set data source
+    sessionFactory.setDataSource(dataSource);
+
+    // set config location
+    sessionFactory.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
+
+    // set mapper xml location
+    Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath*:mybatis/mapper/*.xml");
+    sessionFactory.setMapperLocations(resources);
+
+    return sessionFactory.getObject();
+  }
+  // ------------ slave datasource 1 end ---------------
+
+
+  // ------------ druid monitor config start ---------------
   @Bean
   public ServletRegistrationBean DruidStatViewServlet() {
     ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
@@ -74,7 +116,6 @@ public class AccountServiceConfiguration {
     return servletRegistrationBean;
   }
 
-
   @Bean
   public FilterRegistrationBean druidStatFilter() {
     FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
@@ -84,4 +125,5 @@ public class AccountServiceConfiguration {
     filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
     return filterRegistrationBean;
   }
+  // ------------ druid monitor config end ---------------
 }

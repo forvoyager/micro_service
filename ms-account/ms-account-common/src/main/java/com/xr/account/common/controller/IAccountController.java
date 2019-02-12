@@ -2,8 +2,8 @@ package com.xr.account.common.controller;
 
 import com.xr.account.common.model.AccountModel;
 import com.xr.base.core.dto.ResultDto;
-import com.xr.base.jdbc.core.Cluster;
-import com.xr.base.jdbc.page.Page;
+import com.xr.base.core.enums.Cluster;
+import com.xr.base.core.page.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
