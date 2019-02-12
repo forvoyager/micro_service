@@ -1,6 +1,5 @@
 package com.xr.test;
 
-import com.xr.base.core.util.DateUtil;
 import com.xr.test.base.BaseTestWithoutLogin;
 import org.junit.Test;
 
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yangchangyan@yijiedai.com on 2019-02-11 14:22.
+ * Created by forvoyager@outlook.com on 2019-02-11 14:22.
  */
 public class AccountTest extends BaseTestWithoutLogin {
 
