@@ -42,7 +42,7 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * TableId 注解存在更新记录，否插入一条记录
+   * 存在则更新，否则插入
    * </p>
    *
    * @param entity 实体对象
@@ -64,7 +64,7 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 删除（根据ID 批量删除）
+   * 根据ID 批量删除
    * </p>
    *
    * @param idList 主键ID列表

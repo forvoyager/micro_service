@@ -112,7 +112,7 @@ public abstract class BaseTestWithoutLogin {
    * @return
    * @throws Exception
    */
-  protected String requestBody(String url, Map<String, Object> param) throws Exception {
+  protected String requestBody(String url, Object param) throws Exception {
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
       .get(url)
       .contentType(MediaType.APPLICATION_JSON_UTF8)

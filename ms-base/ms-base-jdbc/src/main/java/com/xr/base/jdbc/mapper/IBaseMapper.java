@@ -40,32 +40,12 @@ public interface IBaseMapper<T> {
   int delete(Map<String, Object> columnMap);
 
   /**
-   * <p>
-   * 修改
-   * </p>
-   *
-   * @param entity 实体对象
-   * @return T 更新的行数
-   */
-  int update(T entity);
-
-  /**
    * 根据传入的map参数进行更新
    *
    * @param columnMap 参数
    * @return
    */
-  int updateByMap(Map<String, Object> columnMap);
-
-  /**
-   * <p>
-   * 根据 ID 查询
-   * </p>
-   *
-   * @param id 主键ID
-   * @return T
-   */
-  T selectById(Serializable id);
+  int update(Map<String, Object> columnMap);
 
   /**
    * <p>

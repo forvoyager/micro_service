@@ -1,15 +1,30 @@
 package com.xr.base.core.model;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 /**
+ * 基础模型数据
+ *
  * Created by forvoyager@outlook.com on 2019-02-01 11:34.
  */
 public class BaseModel implements Serializable {
 
+  /**
+   * 创建时间
+   */
   protected Long create_time;
+  /**
+   * 最后更新时间
+   */
   protected Long update_time;
+  /**
+   * 版本号
+   */
   protected Integer version;
+  /**
+   * 条件 版本号 （不序列化）
+   */
   protected Integer where_version;
 
   public Long getCreate_time() {
@@ -36,6 +51,7 @@ public class BaseModel implements Serializable {
     this.version = version;
   }
 
+  @Transient
   public Integer getWhere_version() {
     return where_version;
   }

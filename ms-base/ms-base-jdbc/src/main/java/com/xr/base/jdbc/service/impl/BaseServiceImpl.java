@@ -1,9 +1,6 @@
 package com.xr.base.jdbc.service.impl;
 
-import com.xr.base.core.util.CollectionUtils;
-import com.xr.base.core.util.MapUtils;
-import com.xr.base.core.util.ReflectUtils;
-import com.xr.base.core.util.StringUtils;
+import com.xr.base.core.util.*;
 import com.xr.base.jdbc.core.Cluster;
 import com.xr.base.jdbc.mapper.IBaseMapper;
 import com.xr.base.jdbc.page.Page;
@@ -28,34 +25,35 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
   @Override
   public T insert(T entity) throws Exception {
+
+    AssertUtils.notNull(entity, "insert failed, with invalid param value.");
+
     this.baseMapper.insert(entity);
     return entity;
   }
 
   @Override
   public int insertBatch(List<T> entityList) throws Exception {
-    if (CollectionUtils.isEmpty(entityList)) {
-      throw new IllegalArgumentException("Error: entityList must not be empty");
-    }
+
+    AssertUtils.notEmpty(entityList, "insert batch failed, with invalid param value.");
+
     this.baseMapper.insertBatch(entityList);
     return entityList.size();
   }
 
   @Override
   public T insertOrUpdate(T entity) throws Exception {
-    if(entity != null){
-      Object idVal = ReflectUtils.getMethodValue(entity, this.getPrimaryKeyName());
-      if (StringUtils.isEmpty(idVal)) {
-        entity = insert(entity);
+
+    AssertUtils.notNull(entity, "insert or update failed, with invalid param value.");
+
+    Object idVal = ReflectUtils.getMethodValue(entity, this.getPrimaryKeyName());
+    if (StringUtils.isEmpty(idVal)) {
+      entity = insert(entity);
+    } else {
+      if (1 == update(entity)) {
+        entity = selectOne(MapUtils.newHashMap(this.getPrimaryKeyName(), idVal), Cluster.master);
       } else {
-          /*
-           * 更新成功直接返回，失败执行插入逻辑
-           */
-        if (1 == update(entity)) {
-          entity = selectOne(MapUtils.newHashMap(this.getPrimaryKeyName(), idVal), Cluster.master);
-        } else {
-          entity = insert(entity);
-        }
+        entity = insert(entity);
       }
     }
 
@@ -64,32 +62,51 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
   @Override
   public int deleteById(Serializable id) throws Exception {
+
+    AssertUtils.notNull(id, "delete failed, with invalid primary key id.");
+
     return this.baseMapper.delete(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
   }
 
   @Override
   public int deleteByMap(Map<String, Object> columnMap) throws Exception {
+
+    AssertUtils.notEmpty(columnMap, "delete failed, with invalid condition.");
+
     return this.baseMapper.delete(columnMap);
   }
 
   @Override
   public int deleteBatchIds(Collection<? extends Serializable> idList) throws Exception {
+
+    AssertUtils.notEmpty(idList, "delete batch by id failed, with invalid param value.");
+
     return this.baseMapper.delete(MapUtils.newHashMap("idList", idList));
   }
 
   @Override
   public int update(T entity) throws Exception {
-    return this.baseMapper.update(entity);
+
+    AssertUtils.notNull(entity, "update failed, with invalid param value.");
+
+    return this.baseMapper.update(Utils.javaBeanToMap(entity));
   }
 
   @Override
   public int updateByMap(Map<String, Object> columnMap) throws Exception {
-    return this.baseMapper.updateByMap(columnMap);
+
+    AssertUtils.notEmpty(columnMap, "update failed, with invalid condition.");
+
+    return this.baseMapper.update(columnMap);
   }
 
   @Override
   public T selectById(Serializable id, Cluster cluster) throws Exception {
-    return this.baseMapper.selectById(id);
+
+    if(id == null){ return null; }
+
+    List<T> data = this.baseMapper.selectList(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
+    return CollectionUtils.isEmpty(data) ? null : data.get(0);
   }
 
   @Override
@@ -102,14 +119,14 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public List<T> selectList(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    return this.baseMapper.selectList(columnMap);
+  public T selectOne(Map<String, Object> columnMap, Cluster cluster) throws Exception {
+    List<T> data = this.baseMapper.selectList(columnMap);
+    return CollectionUtils.isEmpty(data) ? null : data.get(0);
   }
 
   @Override
-  public T selectOne(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    List<T> datas = this.baseMapper.selectList(columnMap);
-    return CollectionUtils.isEmpty(datas) ? null : datas.get(0);
+  public List<T> selectList(Map<String, Object> columnMap, Cluster cluster) throws Exception {
+    return this.baseMapper.selectList(columnMap);
   }
 
   @Override

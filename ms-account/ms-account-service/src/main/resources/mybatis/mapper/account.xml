@@ -29,8 +29,8 @@
     <if test="update_time != null">
       <![CDATA[ AND t.`update_time` = #{update_time} ]]>
     </if>
-    <if test="where_version != null">
-      <![CDATA[ AND t.`version` = #{where_version} ]]>
+    <if test="version != null">
+      <![CDATA[ AND t.`version` = #{version} ]]>
     </if>
   </sql>
 
@@ -80,20 +80,17 @@
   </insert>
 
   <!-- 批量插入 -->
-  <insert id="insertBatch" parameterType="map">
+  <insert id="insertBatch" parameterType="com.xr.account.common.model.AccountModel">
     <![CDATA[ INSERT INTO `ms_account` (`user_id`, `balance`, `frozen`, `create_time`, `update_time`) VALUES ]]>
     <foreach collection="list" separator="," item="item">
       (#{item.user_id}, #{item.balance}, #{item.frozen}, #{item.create_time}, #{item.update_time})
     </foreach>
   </insert>
 
-  <!-- 更新 -->
-  <update id="update" parameterType="com.xr.account.common.model.AccountModel">
+  <!-- 更新（主键/version/create_time不会被更新，version自增1） -->
+  <update id="update" parameterType="map">
     <![CDATA[ UPDATE `ms_account` t SET t.`version` = t.`version` + 1, ]]>
     <trim suffixOverrides=",">
-      <if test="user_id != null">
-        <![CDATA[ t.`user_id` = #{user_id}, ]]>
-      </if>
       <if test="balance != null">
         <![CDATA[ t.`balance` = #{balance}, ]]>
       </if>
@@ -105,31 +102,12 @@
       </if>
     </trim>
     <where>
-      <include refid="Base_Where_Sql"/>
-      <include refid="Custom_Where_Sql"/>
-    </where>
-  </update>
-
-  <!-- 更新 -->
-  <update id="updateByMap" parameterType="map">
-    <![CDATA[ UPDATE `ms_account` t SET t.`version` = t.`version` + 1, ]]>
-    <trim suffixOverrides=",">
       <if test="user_id != null">
-        <![CDATA[ t.`user_id` = #{user_id}, ]]>
+        <![CDATA[ AND t.`user_id` = #{user_id} ]]>
       </if>
-      <if test="balance != null">
-        <![CDATA[ t.`balance` = #{balance}, ]]>
+      <if test="version != null">
+        <![CDATA[ AND t.`version` = #{version} ]]>
       </if>
-      <if test="frozen != null">
-        <![CDATA[ t.`frozen` = #{frozen}, ]]>
-      </if>
-      <if test="update_time != null">
-        <![CDATA[ t.`update_time` = #{update_time}, ]]>
-      </if>
-    </trim>
-    <where>
-      <include refid="Base_Where_Sql"/>
-      <include refid="Custom_Where_Sql"/>
     </where>
   </update>
 
@@ -146,7 +124,7 @@
 
   <!-- 查询行数 -->
   <select id="selectCount" parameterType="map" resultType="long">
-    <![CDATA[ SELECT COUNT(*) FROM `ms_account` t ]]>
+    <![CDATA[ SELECT COUNT(t.*) FROM `ms_account` t ]]>
     <where>
       <include refid="Base_Where_Sql"/>
       <include refid="Custom_Where_Sql"/>
@@ -155,7 +133,6 @@
 
   <!-- 查询记录 -->
   <select id="selectList" parameterType="map" resultType="com.xr.account.common.model.AccountModel">
-    <!--<include refid="global.pageStart"/>-->
     <![CDATA[
       SELECT
       `user_id`,
