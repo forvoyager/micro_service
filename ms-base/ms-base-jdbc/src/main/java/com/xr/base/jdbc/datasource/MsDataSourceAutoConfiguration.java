@@ -3,6 +3,7 @@ package com.xr.base.jdbc.datasource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import com.xr.base.core.enums.Cluster;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -21,6 +23,8 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 数据源自动配置（默认不会启动）
@@ -30,16 +34,7 @@ import javax.sql.DataSource;
 @ConditionalOnProperty(prefix = MsDataSourceProperties.PREFIX, name = "enabled", matchIfMissing = false)
 public class MsDataSourceAutoConfiguration {
 
-  private Logger logger = LoggerFactory.getLogger(getClass());
-
-  public MsDataSourceAutoConfiguration(){
-    logger.info("init datasource...");
-  }
-
-
-  // ------------ master datasource 1 start ---------------
   @Bean
-  @Primary
   @ConfigurationProperties("spring.datasource.druid.master.1")
   public DataSource masterDataSource_1() {
     /*
@@ -50,14 +45,39 @@ public class MsDataSourceAutoConfiguration {
   }
 
   @Bean
+  @ConfigurationProperties("spring.datasource.druid.slave.1")
+  public DataSource slaveDataSource_1() {
+    return new DruidDataSource();
+  }
+
+  @Bean
+  @DependsOn({"masterDataSource_1", "slaveDataSource_1"})
   @Primary
-  public DataSourceTransactionManager masterTransactionManager_1(@Qualifier("masterDataSource_1") DataSource dataSource) {
+  public DataSource dataSource(
+    @Qualifier("masterDataSource_1") DataSource master_1,
+    @Qualifier("slaveDataSource_1") DataSource slave_1
+  ) {
+    DynamicDataSource dynamicDataSource = new DynamicDataSource();
+    dynamicDataSource.setDefaultTargetDataSource(master_1);
+
+    Map<Object, Object> targetDataSources = new HashMap<>();
+    targetDataSources.put(null, master_1);
+    targetDataSources.put(Cluster.master, master_1);
+    targetDataSources.put(Cluster.slave, slave_1);
+    dynamicDataSource.setTargetDataSources(targetDataSources);
+
+    return dynamicDataSource;
+  }
+
+  @Bean
+  @Primary
+  public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
     return new DataSourceTransactionManager(dataSource);
   }
 
   @Bean
   @Primary
-  public SqlSessionFactory masterSqlSessionFactory_1(@Qualifier("masterDataSource_1") DataSource dataSource) throws Exception {
+  public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
     final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
     // set data source
     sessionFactory.setDataSource(dataSource);
@@ -82,38 +102,20 @@ public class MsDataSourceAutoConfiguration {
 
     return sessionFactory.getObject();
   }
-  // ------------ master datasource 1 end ---------------
 
-
-  // ------------ slave datasource 1 start ---------------
+  /**
+   * 数据源切换方式：
+   * 1、手动切换，在操作数据库之前（如：dao、service中），手动切换数据库：
+   * DataSourceContextHolder.setMaster() 或者 DataSourceContextHolder.setMaster()
+   *
+   * 2、自动切换（AOP拦截），推荐。
+   *
+   * @return
+   */
   @Bean
-  @ConfigurationProperties("spring.datasource.druid.slave.1")
-  public DataSource slaveDataSource_1() {
-    return new DruidDataSource();
+  public DataSourceInterceptor dataSourceInterceptor(){
+    return new DataSourceInterceptor();
   }
-
-  @Bean
-  public DataSourceTransactionManager slaveTransactionManager_1(@Qualifier("slaveDataSource_1") DataSource dataSource) {
-    return new DataSourceTransactionManager(dataSource);
-  }
-
-  @Bean
-  public SqlSessionFactory slaveSqlSessionFactory_1(@Qualifier("slaveDataSource_1") DataSource dataSource) throws Exception {
-    final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-    // set data source
-    sessionFactory.setDataSource(dataSource);
-
-    // set config location
-    sessionFactory.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
-
-    // set mapper xml location
-    Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath*:mybatis/mapper/*.xml");
-    sessionFactory.setMapperLocations(resources);
-
-    return sessionFactory.getObject();
-  }
-  // ------------ slave datasource 1 end ---------------
-
 
   // ------------ druid monitor config start ---------------
   @Bean
@@ -139,4 +141,9 @@ public class MsDataSourceAutoConfiguration {
   }
   // ------------ druid monitor config end ---------------
 
+  private Logger logger = LoggerFactory.getLogger(getClass());
+
+  public MsDataSourceAutoConfiguration(){
+    logger.info("init datasource...");
+  }
 }
