@@ -18,6 +18,7 @@
     <module>ms-base-common</module>
     <module>ms-base-jdbc</module>
     <module>ms-base-web</module>
+    <module>ms-base-trace-feign</module>
   </modules>
 
   <dependencies>

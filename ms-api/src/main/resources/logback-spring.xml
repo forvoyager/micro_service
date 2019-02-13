@@ -7,7 +7,7 @@
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <!--<Encoding>UTF-8</Encoding>-->
     <layout class="ch.qos.logback.classic.PatternLayout">
-      <pattern>[%date] [%thread] [%X{yjd_trace_id}] [%-5level] %c: %message%n</pattern>
+      <pattern>[%date] [%thread] [%X{ms_trace_id}] [%-5level] %c: %message%n</pattern>
     </layout>
   </appender>
 
@@ -27,7 +27,7 @@
       <maxHistory>30</maxHistory>
     </rollingPolicy>
     <layout class="ch.qos.logback.classic.PatternLayout">
-      <pattern>[%date] [%thread] [%X{yjd_trace_id}] [%-5level] %c: %message%n</pattern>
+      <pattern>[%date] [%thread] [%X{ms_trace_id}] [%-5level] %c: %message%n</pattern>
     </layout>
   </appender>
 
@@ -42,7 +42,7 @@
       <maxHistory>30</maxHistory>
     </rollingPolicy>
     <layout class="ch.qos.logback.classic.PatternLayout">
-      <pattern>[%date] [%thread] [%X{yjd_trace_id}] [%-5level] %c: %message%n</pattern>
+      <pattern>[%date] [%thread] [%X{ms_trace_id}] [%-5level] %c: %message%n</pattern>
     </layout>
   </appender>
 
