@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * 数据源自动配置（默认不会启动）
- * Created by yangchangyan@yijiedai.com on 2019-02-13 10:10.
+ * Created by forvoyager@outlook.com on 2019-02-13 10:10.
  */
 @Configuration
 @ConditionalOnProperty(prefix = MsDataSourceProperties.PREFIX, name = "enabled", matchIfMissing = false)

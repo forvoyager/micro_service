@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * 数据源动态切换拦截器
- * Created by yangchangyan@yijiedai.com on 2019-02-13 11:24.
+ * Created by forvoyager@outlook.com on 2019-02-13 11:24.
  */
 @Aspect
 @Order(Ordered.HIGHEST_PRECEDENCE)

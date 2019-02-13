@@ -1,5 +1,6 @@
 package com.xr.base.jdbc.service.impl;
 
+import com.xr.base.core.model.BaseModel;
 import com.xr.base.core.page.Page;
 import com.xr.base.core.util.*;
 import com.xr.base.core.enums.Cluster;
@@ -27,6 +28,12 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   public T insert(T entity) throws Exception {
 
     AssertUtils.notNull(entity, "insert failed, with invalid param value.");
+    BaseModel baseModel = (BaseModel)entity;
+    if(baseModel.getCreate_time() == null){
+      baseModel.setCreate_time(DateUtil.currentTimeInSecond());
+    }
+    baseModel.setVersion(0);
+    baseModel.setUpdate_time(baseModel.getCreate_time());
 
     this.baseMapper.insert(entity);
     return entity;

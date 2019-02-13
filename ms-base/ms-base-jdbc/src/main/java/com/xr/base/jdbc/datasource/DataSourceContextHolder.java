@@ -4,7 +4,7 @@ import com.xr.base.core.enums.Cluster;
 
 /**
  * 保存上下文Data Source类型（线程安全）
- * Created by yangchangyan@yijiedai.com on 2019-02-13 9:59.
+ * Created by forvoyager@outlook.com on 2019-02-13 9:59.
  */
 public class DataSourceContextHolder {
 

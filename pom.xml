@@ -30,6 +30,7 @@
     <module>ms-order</module>
     <module>ms-account</module>
     <module>ms-storage</module>
+    <module>ms-api</module>
   </modules>
 
   <repositories>
