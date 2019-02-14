@@ -1,6 +1,6 @@
 package com.xr.base.jdbc.service;
 
-import com.xr.base.core.page.Page;
+import com.xr.base.core.page.PageData;
 import com.xr.base.core.service.IService;
 import com.xr.base.core.enums.Cluster;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,7 +20,7 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 插入一条记录（选择字段，策略插入）
+   * 插入一条记录
    * </p>
    *
    * @param entity 实体对象
@@ -31,7 +31,7 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 插入（批量），该方法不适合 Oracle
+   * 插入（批量）
    * </p>
    *
    * @param entityList 实体对象列表
@@ -75,14 +75,14 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 根据 columnMap 条件，删除记录
+   * 根据 condition 条件，删除记录
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @return Integer 删除的行数
    */
   @Transactional(propagation = Propagation.REQUIRED)
-  int deleteByMap(Map<String, Object> columnMap) throws Exception;
+  int deleteByMap(Map<String, Object> condition) throws Exception;
 
   /**
    * <p>
@@ -97,7 +97,7 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 根据 columnMap 条件，修改记录
+   * 根据 condition 条件，修改记录
    * </p>
    *
    * @param columnMap 表字段 map 对象
@@ -131,57 +131,59 @@ public interface IBaseService<T> extends IService {
 
   /**
    * <p>
-   * 根据 columnMapt条件，查询一条记录
+   * 根据 conditiont条件，查询一条记录
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param cluster 主节点 or 从节点
    * @return T
    */
-  T selectOne(Map<String, Object> columnMap, Cluster cluster) throws Exception;
+  T selectOne(Map<String, Object> condition, Cluster cluster) throws Exception;
 
   /**
    * <p>
-   * 查询（根据 columnMap 条件）
+   * 查询（根据 condition 条件）
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param cluster 主节点 or 从节点
    * @return List<T>
    */
-  List<T> selectList(Map<String, Object> columnMap, Cluster cluster) throws Exception;
+  List<T> selectList(Map<String, Object> condition, Cluster cluster) throws Exception;
 
   /**
    * <p>
-   * 根据 Wrapper，查询一条记录
+   * 根据 condition 条件，查询记录，并转换成map，key是主键字段的值
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param cluster 主节点 or 从节点
    * @return Map<String,Object>
    */
-  Map<String, T> selectMap(Map<String, Object> columnMap, Cluster cluster) throws Exception;
+  Map<String, T> selectMap(Map<String, Object> condition, Cluster cluster) throws Exception;
 
   /**
    * <p>
-   * 根据 Wrapper 条件，查询总记录数
+   * 根据 condition 条件，查询总记录数
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param cluster 主节点 or 从节点
    * @return long
    */
-  long selectCount(Map<String, Object> columnMap, Cluster cluster) throws Exception;
+  long selectCount(Map<String, Object> condition, Cluster cluster) throws Exception;
 
   /**
    * <p>
    * 翻页查询
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param page 第几页
+   * @param size 每页记录数
+   * @param condition 表字段 map 对象
    * @param cluster 主节点 or 从节点
    * @return
    */
-  Page<T> selectPage(Map<String, Object> columnMap, Cluster cluster) throws Exception;
+  PageData<T> selectPage(int page, int size, Map<String, Object> condition, Cluster cluster) throws Exception;
 
 }

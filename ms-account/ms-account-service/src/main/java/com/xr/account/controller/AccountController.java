@@ -5,7 +5,7 @@ import com.xr.account.common.model.AccountModel;
 import com.xr.account.service.IAccountService;
 import com.xr.base.core.dto.ResultDto;
 import com.xr.base.core.enums.Cluster;
-import com.xr.base.core.page.Page;
+import com.xr.base.core.page.PageData;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,8 +48,8 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<Integer> deleteByMap(@RequestBody Map<String, Object> columnMap) throws Exception {
-    return ResultDto.success("成功", accountService.deleteByMap(columnMap));
+  public ResultDto<Integer> deleteByMap(@RequestBody Map<String, Object> condition) throws Exception {
+    return ResultDto.success("成功", accountService.deleteByMap(condition));
   }
 
   @Override
@@ -58,8 +58,8 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<Integer> updateByMap(@RequestBody Map<String, Object> columnMap) throws Exception {
-    return ResultDto.success("成功", accountService.updateByMap(columnMap));
+  public ResultDto<Integer> updateByMap(@RequestBody Map<String, Object> condition) throws Exception {
+    return ResultDto.success("成功", accountService.updateByMap(condition));
   }
 
   @Override
@@ -73,28 +73,28 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success("成功", accountService.selectList(columnMap, master));
+  public ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectList(condition, master));
   }
 
   @Override
-  public ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success("成功", accountService.selectOne(columnMap, master));
+  public ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectOne(condition, master));
   }
 
   @Override
-  public ResultDto<Map<String, AccountModel>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success("成功", accountService.selectMap(columnMap, master));
+  public ResultDto<Map<String, AccountModel>> selectMap(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectMap(condition, master));
   }
 
   @Override
-  public ResultDto<Long> selectCount(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success("成功", accountService.selectCount(columnMap, master));
+  public ResultDto<Long> selectCount(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectCount(condition, master));
   }
 
   @Override
-  public ResultDto<Page<AccountModel>> selectPage(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success("成功", accountService.selectPage(columnMap, master));
+  public ResultDto<PageData<AccountModel>> selectPage(@PathVariable("page") int page, @PathVariable("size") int size, @RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success("成功", accountService.selectPage(page, size, condition, master));
   }
 
 }

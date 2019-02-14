@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="global">
 
-  <sql id="globalSortSql">
-    <if test="sort != null and sort.toString() != ''">
+  <sql id="globalSort">
+    <if test="sort != null">
       <![CDATA[ order by ${sort} ]]>
     </if>
-    <if test="order != null and order.toString() != ''">
+    <if test="order != null">
       <![CDATA[ ${order} ]]>
     </if>
   </sql>
@@ -38,8 +38,8 @@
         <![CDATA[]]>
     </sql>
   <sql id="mysqlPageEnd">
-    <if test="rowstartindex!=null and rowendindex!=null">
-      <![CDATA[ LIMIT #{rowstartindex},#{rowendindex} ]]>
+    <if test="pagestartindex !=null and pagesize != null">
+      <![CDATA[ LIMIT #{pagestartindex},#{pagesize} ]]>
     </if>
   </sql>
 

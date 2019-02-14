@@ -6,6 +6,11 @@
     user_id, balance, frozen, create_time, update_time, version
   </sql>
 
+  <!-- 自定义查询条件 -->
+  <sql id="Custom_Where_Sql">
+
+  </sql>
+
   <!-- 基础查询条件，不允许修改，自定义条件在Custom_Where_Sql中添加 -->
   <sql id="Base_Where_Sql">
     <if test="idList != null and idList.size() > 0">
@@ -34,9 +39,11 @@
     </if>
   </sql>
 
-  <!-- 自定义查询条件 -->
-  <sql id="Custom_Where_Sql">
-
+  <sql id="Where_Sql">
+    <where>
+      <include refid="Base_Where_Sql"/>
+      <include refid="Custom_Where_Sql"/>
+    </where>
   </sql>
 
   <!-- 插入 -->
@@ -124,15 +131,13 @@
 
   <!-- 查询行数 -->
   <select id="selectCount" parameterType="map" resultType="long">
-    <![CDATA[ SELECT COUNT(t.*) FROM `ms_account` t ]]>
-    <where>
-      <include refid="Base_Where_Sql"/>
-      <include refid="Custom_Where_Sql"/>
-    </where>
+    <![CDATA[ SELECT COUNT(*) FROM `ms_account` t ]]>
+    <include refid="Where_Sql"/>
   </select>
 
   <!-- 查询记录 -->
   <select id="selectList" parameterType="map" resultType="com.xr.account.common.model.AccountModel">
+    <include refid="global.pageStart"/>
     <![CDATA[
       SELECT
       `user_id`,
@@ -144,10 +149,9 @@
       FROM
       `ms_account` t
     ]]>
-    <where>
-      <include refid="Base_Where_Sql"/>
-      <include refid="Custom_Where_Sql"/>
-    </where>
+    <include refid="Where_Sql"/>
+    <include refid="global.globalSort"/>
+    <include refid="global.pageEnd"/>
   </select>
 
 </mapper>

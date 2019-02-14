@@ -3,7 +3,7 @@ package com.xr.account.common.controller;
 import com.xr.account.common.model.AccountModel;
 import com.xr.base.core.dto.ResultDto;
 import com.xr.base.core.enums.Cluster;
-import com.xr.base.core.page.Page;
+import com.xr.base.core.page.PageData;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public interface IAccountController {
 
   /**
    * <p>
-   * 插入一条记录（选择字段，策略插入）
+   * 插入一条记录
    * </p>
    *
    * @param entity 实体对象
@@ -33,7 +33,7 @@ public interface IAccountController {
 
   /**
    * <p>
-   * 插入（批量），该方法不适合 Oracle
+   * 插入（批量）
    * </p>
    *
    * @param entityList 实体对象列表
@@ -44,7 +44,7 @@ public interface IAccountController {
 
   /**
    * <p>
-   * AccountModelableId 注解存在更新记录，否插入一条记录
+   * 存在则更新，否则插入
    * </p>
    *
    * @param entity 实体对象
@@ -66,14 +66,14 @@ public interface IAccountController {
 
   /**
    * <p>
-   * 根据 columnMap 条件，删除记录
+   * 根据 condition 条件，删除记录
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @return Integer 删除的行数
    */
   @RequestMapping("/account/delete")
-  ResultDto<Integer> deleteByMap(@RequestBody Map<String, Object> columnMap) throws Exception;
+  ResultDto<Integer> deleteByMap(@RequestBody Map<String, Object> condition) throws Exception;
 
   /**
    * <p>
@@ -123,62 +123,64 @@ public interface IAccountController {
 
   /**
    * <p>
-   * 查询（根据 columnMap 条件）
+   * 查询（根据 condition 条件）
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param master 主节点 or 从节点
    * @return List<AccountModel>
    */
   @RequestMapping("/account/select/{master}/list")
-  ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
+  ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
-   * 根据 Wrapper，查询一条记录
+   * 根据 condition 条件，查询一条记录
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param master 主节点 or 从节点
    * @return AccountModel
    */
   @RequestMapping("/account/select/{master}/one")
-  ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
+  ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
-   * 根据 Wrapper，查询一条记录
+   * 根据 condition 条件，查询并转换成map
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param master 主节点 or 从节点
    * @return Map<String,Object>
    */
   @RequestMapping("/account/select/{master}/map")
-  ResultDto<Map<String, AccountModel>> selectMap(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
+  ResultDto<Map<String, AccountModel>> selectMap(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
-   * 根据 Wrapper 条件，查询总记录数
+   * 根据 condition 条件，查询总记录数
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param condition 表字段 map 对象
    * @param master 主节点 or 从节点
    * @return long
    */
   @RequestMapping("/account/select/{master}/count")
-  ResultDto<Long> selectCount(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
+  ResultDto<Long> selectCount(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>
    * 翻页查询
    * </p>
    *
-   * @param columnMap 表字段 map 对象
+   * @param page 第几页
+   * @param size 每页记录数
+   * @param condition 表字段 map 对象
    * @param master 主节点 or 从节点
    * @return
    */
-  @RequestMapping("/account/select/{master}/page")
-  ResultDto<Page<AccountModel>> selectPage(@RequestBody Map<String, Object> columnMap, @PathVariable("master") Cluster master) throws Exception;
+  @RequestMapping("/account/select/{master}/page/{page}/{size}")
+  ResultDto<PageData<AccountModel>> selectPage(@PathVariable("page") int page, @PathVariable("size") int size, @RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
 
 }

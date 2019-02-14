@@ -1,7 +1,7 @@
 package com.xr.base.jdbc.service.impl;
 
 import com.xr.base.core.model.BaseModel;
-import com.xr.base.core.page.Page;
+import com.xr.base.core.page.PageData;
 import com.xr.base.core.util.*;
 import com.xr.base.core.enums.Cluster;
 import com.xr.base.jdbc.mapper.IBaseMapper;
@@ -20,6 +20,8 @@ import java.util.*;
 public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IBaseService<T> {
 
   protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  private final String dbType = "MYSQL";
 
   @Autowired
   protected M baseMapper;
@@ -72,15 +74,15 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
     AssertUtils.notNull(id, "delete failed, with invalid primary key id.");
 
-    return this.baseMapper.delete(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
+    return this.deleteByMap(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
   }
 
   @Override
-  public int deleteByMap(Map<String, Object> columnMap) throws Exception {
+  public int deleteByMap(Map<String, Object> condition) throws Exception {
 
-    AssertUtils.notEmpty(columnMap, "delete failed, with invalid condition.");
+    AssertUtils.notEmpty(condition, "delete failed, with invalid condition.");
 
-    return this.baseMapper.delete(columnMap);
+    return this.baseMapper.delete(condition);
   }
 
   @Override
@@ -88,15 +90,19 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
     AssertUtils.notEmpty(idList, "delete batch by id failed, with invalid param value.");
 
-    return this.baseMapper.delete(MapUtils.newHashMap("idList", idList));
+    return this.deleteByMap(MapUtils.newHashMap("idList", idList));
   }
 
   @Override
   public int update(T entity) throws Exception {
 
     AssertUtils.notNull(entity, "update failed, with invalid param value.");
+    BaseModel baseModel = (BaseModel)entity;
+    if(baseModel.getUpdate_time() == null){
+      baseModel.setUpdate_time(DateUtil.currentTimeInSecond());
+    }
 
-    return this.baseMapper.update(Utils.javaBeanToMap(entity));
+    return this.updateByMap(Utils.javaBeanToMap(entity));
   }
 
   @Override
@@ -112,8 +118,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
     if(id == null){ return null; }
 
-    List<T> data = this.baseMapper.selectList(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
-    return CollectionUtils.isEmpty(data) ? null : data.get(0);
+    return this.selectOne(MapUtils.newHashMap(this.getPrimaryKeyName(), id), cluster);
   }
 
   @Override
@@ -122,26 +127,29 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
       return Collections.EMPTY_LIST;
     }
 
-    return this.baseMapper.selectList(MapUtils.newHashMap("idList", idList));
+    return this.selectList(MapUtils.newHashMap("idList", idList), cluster);
   }
 
   @Override
-  public T selectOne(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    List<T> data = this.baseMapper.selectList(columnMap);
+  public T selectOne(Map<String, Object> condition, Cluster cluster) throws Exception {
+    List<T> data = this.baseMapper.selectList(condition);
     return CollectionUtils.isEmpty(data) ? null : data.get(0);
   }
 
   @Override
-  public List<T> selectList(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    return this.baseMapper.selectList(columnMap);
+  public List<T> selectList(Map<String, Object> condition, Cluster cluster) throws Exception {
+
+    AssertUtils.notEmpty(condition, "select failed, with invalid condition.");
+
+    return this.baseMapper.selectList(condition);
   }
 
   @Override
-  public Map<String, T> selectMap(Map<String, Object> columnMap, Cluster cluster) throws Exception {
+  public Map<String, T> selectMap(Map<String, Object> condition, Cluster cluster) throws Exception {
 
     Map<String, T> primaryKeyMapData = new HashMap<String, T>();
 
-    List<T> datas = this.baseMapper.selectList(columnMap);
+    List<T> datas = this.selectList(condition, cluster);
     for(T data : datas){
       primaryKeyMapData.put(ReflectUtils.getMethodValue(data, this.getPrimaryKeyName()).toString(), data);
     }
@@ -150,15 +158,50 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public long selectCount(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    return this.baseMapper.selectCount(columnMap);
+  public long selectCount(Map<String, Object> condition, Cluster cluster) throws Exception {
+
+    AssertUtils.notEmpty(condition, "select failed, with invalid condition.");
+
+    return this.baseMapper.selectCount(condition);
   }
 
   @Override
-  public Page<T> selectPage(Map<String, Object> columnMap, Cluster cluster) throws Exception {
-    // TODO
-    return null;
+  public PageData<T> selectPage(int page, int size, Map<String, Object> condition, Cluster cluster) throws Exception {
+
+    // 默认返回第1页
+    page = page < 1 ? 1 : page;
+
+    // 默认每页10条
+    int pageSize = size < 1 ? 10 : size;
+
+    // 计算page页的起始行位置
+    long pageStartIndex = (page -1)*size;
+
+    if(condition == null){
+      condition = new HashMap<>();
+    }
+
+    condition.put("pagesize", pageSize);
+    condition.put("pagestartindex", pageStartIndex);
+    condition.put("dbType", dbType);
+
+    // 查询总记录数
+    long records = this.selectCount(condition, cluster);
+
+    // 查询当前页数据
+    List<T> data = this.selectList(condition, cluster);
+
+    PageData<T> pageData = new PageData<T>();
+    pageData.setPage(page);
+    pageData.setSize(pageSize);
+    pageData.setCondition(condition);
+    pageData.setRecords(records);
+    pageData.setPages( (int) (records/size) + (records%size > 0 ? 1 : 0) );
+    pageData.setData(data);
+
+    return pageData;
   }
+
 
   /**
    * 主键名称
