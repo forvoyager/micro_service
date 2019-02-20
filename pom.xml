@@ -180,6 +180,51 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
         </plugin>
+
+        <!--using for build docker image-->
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>1.0.0</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>dockerBuild</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <from>
+              <image>java:8-jdk-alpine</image>
+            </from>
+            <to>
+              <image>ms/${project.artifactId}:${project.version}</image>
+            </to>
+            <container>
+              <appRoot>/app</appRoot>
+              <format>Docker</format>
+              <useCurrentTimestamp>true</useCurrentTimestamp>
+              <jvmFlags>
+                <jvmFlag>-Xms1024m</jvmFlag>
+                <jvmFlag>-Xmx1024m</jvmFlag>
+                <jvmFlag>-XX:+UseParNewGC</jvmFlag>
+                <jvmFlag>-XX:+HeapDumpOnOutOfMemoryError</jvmFlag>
+                <jvmFlag>-XX:HeapDumpPath=/var/logs/heapdump/</jvmFlag>
+              </jvmFlags>
+              <args>
+                <arg>/bin/bash</arg>
+              </args>
+              <!--optional config, auto detective-->
+              <!--<mainClass>com.ms.account.service.PAccountServiceApplication</mainClass>-->
+              <ports>
+                <port>8080</port>
+                <port>10000-10010</port>
+              </ports>
+            </container>
+          </configuration>
+        </plugin>
+
       </plugins>
     </pluginManagement>
   </build>
