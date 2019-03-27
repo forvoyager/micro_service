@@ -213,6 +213,7 @@
                 <jvmFlag>-XX:HeapDumpPath=/var/logs/heapdump/</jvmFlag>
               </jvmFlags>
               <args>
+                <!-- all the args will append after main class -->
                 <arg>/bin/bash</arg>
               </args>
               <!--optional config, auto detective-->
