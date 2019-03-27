@@ -120,13 +120,8 @@
 
   <!-- 删除 -->
   <delete id="delete" parameterType="map">
-    <![CDATA[
-			DELETE t FROM `ms_account` t
-		]]>
-    <where>
-      <include refid="Base_Where_Sql"/>
-      <include refid="Custom_Where_Sql"/>
-    </where>
+    <![CDATA[ DELETE t FROM `ms_account` t ]]>
+    <include refid="Where_Sql"/>
   </delete>
 
   <!-- 查询行数 -->

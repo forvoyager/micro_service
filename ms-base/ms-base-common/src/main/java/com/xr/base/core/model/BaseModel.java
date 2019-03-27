@@ -23,7 +23,7 @@ public class BaseModel implements Serializable {
    */
   protected Integer version;
   /**
-   * 条件 版本号 （不序列化）
+   * 条件 版本号 （@Transient 不序列化）
    */
   protected Integer where_version;
 

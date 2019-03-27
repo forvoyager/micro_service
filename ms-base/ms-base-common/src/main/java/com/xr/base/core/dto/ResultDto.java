@@ -34,8 +34,12 @@ public class ResultDto<T> implements Serializable{
    */
   private Long time;
 
-  public static ResultDto successMessage(String msg) {
+  public static ResultDto success(String msg) {
     return success(msg, null);
+  }
+
+  public static ResultDto success(Object data) {
+    return success("OK", data);
   }
 
   public static ResultDto success(String msg, Object data) {
@@ -47,11 +51,15 @@ public class ResultDto<T> implements Serializable{
     return result;
   }
 
-  public static ResultDto errorMessage(String msg) {
-    return error(msg, null);
+  public static ResultDto failure(String msg) {
+    return failure(msg, null);
   }
 
-  public static ResultDto error(String msg, Object data) {
+  public static ResultDto failure(Object data) {
+    return failure("Failed", data);
+  }
+
+  public static ResultDto failure(String msg, Object data) {
     ResultDto result = new ResultDto();
     result.setCode(ResultCodeEnum.UNKNOW_SYSTEM_ERROR.getCode());
     result.setMessage(msg);

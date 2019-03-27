@@ -27,9 +27,9 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 
       if (error instanceof BaseException) {
         BaseException e = (BaseException) error;
-        result = ResultDto.error(e.getMessage(), e);
+        result = ResultDto.failure(e.getMessage(), e);
       } else {
-        result = ResultDto.errorMessage(error.getMessage());
+        result = ResultDto.failure(error.getMessage());
       }
 
       //异常堆栈信息
@@ -37,7 +37,7 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
         result.putExtData("trace", Throwables.getStackTraceAsString(error));
       }
     } else {
-      result = ResultDto.errorMessage("您访问的资源不存在");
+      result = ResultDto.failure("您访问的资源不存在");
     }
 
     try {
