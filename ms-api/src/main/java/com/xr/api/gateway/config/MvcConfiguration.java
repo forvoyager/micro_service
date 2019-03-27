@@ -40,7 +40,11 @@ public class MvcConfiguration implements WebMvcConfigurer {
   public void addInterceptors(InterceptorRegistry registry) {
 
     // 参数验证
-    registry.addInterceptor(paramValidationInterceptor).order(0).addPathPatterns("/**");
+    registry.addInterceptor(paramValidationInterceptor)
+            .order(0)
+            .addPathPatterns("/**")
+            .excludePathPatterns("/static/**")
+    ;
 
     // 登陆验证
     registry.addInterceptor(loginInterceptor).order(1).addPathPatterns("/**");
