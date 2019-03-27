@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * @Time: 2019-03-27 14:32
- * @Author: yangchangyan@yijiedai.com
+ * @Author: forvoyager@outlook.com
  * @Description: 自定义MVC配置
  */
 @Configuration

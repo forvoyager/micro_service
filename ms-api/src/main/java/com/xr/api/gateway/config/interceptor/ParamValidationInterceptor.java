@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Time: 2019-03-27 15:27
- * @Author: yangchangyan@yijiedai.com
+ * @Author: forvoyager@outlook.com
  * @Description: 参数验证 拦截器
  */
 @Component

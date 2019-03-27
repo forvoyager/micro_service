@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * @Time: 2019-03-27 14:35
- * @Author: yangchangyan@yijiedai.com
+ * @Author: forvoyager@outlook.com
  * @Description: 自定义参数注入注解
  */
 @Target(ElementType.PARAMETER)

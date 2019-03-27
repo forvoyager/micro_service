@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 
 /**
  * @Time: 2019-03-27 14:37
- * @Author: yangchangyan@yijiedai.com
+ * @Author: forvoyager@outlook.com
  * @Description:
  *
  * 自定义参数注入，从data中取出数据，并注入到controller中MsParam注解修饰的属性上。
