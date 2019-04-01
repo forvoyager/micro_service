@@ -50,11 +50,14 @@ public class MsRequestParamMethodArgumentResolver extends AbstractNamedValueMeth
     if(StringUtils.isNotEmpty(data)){
       // 解析data json
       JSONObject jsonObject = JsonUtils.parseObject(data);
-      Object objectValue = jsonObject.containsKey(name) ? jsonObject.get(name) : jsonObject;
+      Object objectValue = jsonObject.containsKey(name) ? jsonObject.get(name) : null;
 
       // 参数类型
       Type paramType = parameter.getGenericParameterType();
       if(isObject(paramType)){
+        if(objectValue == null){
+          objectValue = jsonObject;
+        }
         value = JSON.parseObject(objectValue.toString(), paramType);
       } else {
         value = objectValue;
