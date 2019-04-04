@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Time: 2019-04-04 19:09
- * @Author: yangchangyan@yijiedai.com
+ * @Author: forvoyager@outlook.com
  * @Description: base Controller
  */
 public abstract class BaseController {

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  * @Time: 2019-04-04 19:41
- * @Author: yangchangyan@yijiedai.com
+ * @Author: forvoyager@outlook.com
  * @Description: API 自动配置
  */
 @Configuration

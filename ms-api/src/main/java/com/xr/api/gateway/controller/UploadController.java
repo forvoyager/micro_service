@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * @Time: 2019-04-04 19:08
- * @Author: yangchangyan@yijiedai.com
+ * @Author: forvoyager@outlook.com
  * @Description: 上传操作
  */
 @RestController
