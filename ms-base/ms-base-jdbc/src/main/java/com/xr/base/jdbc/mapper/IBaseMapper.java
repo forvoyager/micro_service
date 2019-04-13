@@ -33,7 +33,7 @@ public interface IBaseMapper<T> {
    * 根据 condition 条件，删除记录
    * </p>
    *
-   * @param condition 表字段 map 对象
+   * @param condition 删除条件
    * @return Integer 删除的行数
    */
   int delete(Map<String, Object> condition);
@@ -41,7 +41,7 @@ public interface IBaseMapper<T> {
   /**
    * 根据传入的map参数进行更新
    *
-   * @param columnMap 参数
+   * @param columnMap 更新参数/查询条件
    * @return
    */
   int update(Map<String, Object> columnMap);
@@ -51,7 +51,7 @@ public interface IBaseMapper<T> {
    * 查询（根据 condition 条件）
    * </p>
    *
-   * @param condition 表字段 map 对象
+   * @param condition 查询条件
    * @return List<T>
    */
   List<T> selectList(Map<String, Object> condition);
@@ -61,7 +61,7 @@ public interface IBaseMapper<T> {
    * 根据 Wrapper 条件，查询总记录数
    * </p>
    *
-   * @param condition 表字段 map 对象
+   * @param condition 查询条件
    * @return long
    */
   long selectCount(Map<String, Object> condition);
