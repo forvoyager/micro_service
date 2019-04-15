@@ -38,8 +38,7 @@ public class AccountController {
   ResultDto<PageData<AccountModel>> selectPage(@RequestParam("page") int page, @RequestParam("size") int size, @RequestParam("master") Cluster master) throws Exception {
     Map condition = MapUtils.newHashMap();
     condition.put("sort", "user_id asc");
-//    return accountClient.selectPage(page, size, condition, master);
-    return accountClient.selectList(condition, master);
+    return accountClient.selectPage(page, size, condition, master);
   }
 
 }
