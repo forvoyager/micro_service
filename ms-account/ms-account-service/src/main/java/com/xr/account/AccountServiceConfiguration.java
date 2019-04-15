@@ -1,6 +1,8 @@
 package com.xr.account;
 
+import com.xr.base.core.aspect.LogAspect;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -11,5 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan(basePackageClasses = {AccountServiceConfiguration.class})
 public class AccountServiceConfiguration {
+
+  @Bean
+  public LogAspect logAspect(){
+    return new LogAspect();
+  }
 
 }

@@ -20,7 +20,8 @@ public class DispatcherServletWrap extends DispatcherServlet {
     try {
       super.service(request, response);
     }catch (Exception e){
-      e.printStackTrace();
+      // TODO
+      throw e;
     }
   }
 }
