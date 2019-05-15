@@ -23,6 +23,12 @@
 
     <dependency>
       <groupId>com.xr</groupId>
+      <artifactId>ms-configuration</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.xr</groupId>
       <artifactId>ms-base-jdbc</artifactId>
       <version>${project.version}</version>
     </dependency>

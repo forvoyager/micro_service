@@ -19,6 +19,7 @@
     <module>ms-base-jdbc</module>
     <module>ms-base-web</module>
     <module>ms-base-trace-feign</module>
+    <module>ms-configuration</module>
   </modules>
 
   <dependencies>

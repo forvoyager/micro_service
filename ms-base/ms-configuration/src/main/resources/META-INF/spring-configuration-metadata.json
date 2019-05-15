@@ -1,0 +1,19 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "ms.config",
+      "type": "com.xr.base.config.MsConfigurationProperties",
+      "sourceType": "com.xr.base.config.MsConfigurationProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.xr.base.config.MsConfigurationProperties",
+      "defaultValue": "",
+      "name": "ms.config.dataIds",
+      "description": "需要加载的Data ID，多个用,隔开",
+      "type": "java.lang.String"
+    }
+  ]
+}
