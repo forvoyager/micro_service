@@ -14,6 +14,11 @@
   <packaging>pom</packaging>
 
   <name>ms-order Maven Webapp</name>
+  <modules>
+    <module>ms-order-common</module>
+    <module>ms-order-client-starter</module>
+    <module>ms-order-service</module>
+  </modules>
 
   <dependencies>
   </dependencies>

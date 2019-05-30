@@ -14,6 +14,11 @@
   <packaging>pom</packaging>
 
   <name>ms-storage Maven Webapp</name>
+  <modules>
+    <module>ms-storage-common</module>
+    <module>ms-storage-client-starter</module>
+    <module>ms-storage-service</module>
+  </modules>
 
   <dependencies>
   </dependencies>

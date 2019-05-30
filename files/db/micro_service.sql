@@ -67,6 +67,8 @@ DROP TABLE IF EXISTS `ms_storage_db`.`ms_storage` ;
 CREATE TABLE IF NOT EXISTS `ms_storage_db`.`ms_storage` (
   `commodity_id` INT NOT NULL COMMENT '商品ID',
   `count` INT NOT NULL DEFAULT 0 COMMENT '库存数量',
+  `create_time` INT NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`commodity_id`))
 ENGINE = InnoDB COMMENT '商品库存信息';
@@ -84,6 +86,8 @@ CREATE TABLE IF NOT EXISTS `ms_order_db`.`ms_order` (
   `count` INT NOT NULL DEFAULT 0 COMMENT '商品数量',
   `money` DECIMAL(11,2) NOT NULL DEFAULT 0 COMMENT '成交金额',
   `trade_time` INT NOT NULL DEFAULT 0 COMMENT '成交时间（秒数）',
+  `create_time` INT NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` INT NOT NULL DEFAULT 0 COMMENT '最后更新时间',
   `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB COMMENT '商品购买信息';
