@@ -74,19 +74,11 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
 
     AssertUtils.notNull(id, "delete failed, with invalid primary key id.");
 
-    return this.deleteByMap(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
+    return (int)this.deleteByMap(MapUtils.newHashMap(this.getPrimaryKeyName(), id));
   }
 
   @Override
-  public int deleteByMap(Map<String, Object> condition) throws Exception {
-
-    AssertUtils.notEmpty(condition, "delete failed, with invalid condition.");
-
-    return this.baseMapper.delete(condition);
-  }
-
-  @Override
-  public int deleteBatchIds(Collection<? extends Serializable> idList) throws Exception {
+  public long deleteByIds(Collection<? extends Serializable> idList) throws Exception {
 
     AssertUtils.notEmpty(idList, "delete batch by id failed, with invalid param value.");
 
@@ -94,7 +86,15 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public int update(T entity) throws Exception {
+  public long deleteByMap(Map<String, Object> condition) throws Exception {
+
+    AssertUtils.notEmpty(condition, "delete failed, with invalid condition.");
+
+    return this.baseMapper.delete(condition);
+  }
+
+  @Override
+  public long update(T entity) throws Exception {
 
     AssertUtils.notNull(entity, "update failed, with invalid param value.");
     BaseModel baseModel = (BaseModel)entity;
@@ -106,7 +106,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public int updateByMap(Map<String, Object> columnMap) throws Exception {
+  public long updateByMap(Map<String, Object> columnMap) throws Exception {
 
     AssertUtils.notEmpty(columnMap, "update failed, with invalid condition.");
 
@@ -122,7 +122,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
   }
 
   @Override
-  public List<T> selectBatchIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception {
+  public List<T> selectByIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception {
     if(CollectionUtils.isEmpty(idList)){
       return Collections.EMPTY_LIST;
     }
