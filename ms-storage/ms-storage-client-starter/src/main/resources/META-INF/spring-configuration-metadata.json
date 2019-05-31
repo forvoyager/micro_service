@@ -1,0 +1,19 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.xr.storage.client.StorageClientProperties",
+      "name": "ms.storage.client",
+      "type": "com.xr.storage.client.StorageClientProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.xr.storage.client.StorageClientProperties",
+      "defaultValue": true,
+      "name": "ms.storage.client.enabled",
+      "description": "storage client 是否加载",
+      "type": "java.lang.Boolean"
+    }
+  ]
+}

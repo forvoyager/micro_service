@@ -1,0 +1,19 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "name": "ms.order.client",
+      "type": "com.xr.order.client.OrderClientProperties",
+      "sourceType": "com.xr.order.client.OrderClientProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.xr.order.client.OrderClientProperties",
+      "defaultValue": true,
+      "name": "ms.order.client.enabled",
+      "description": "order client是否加载",
+      "type": "java.lang.Boolean"
+    }
+  ]
+}

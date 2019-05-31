@@ -3,7 +3,6 @@ package com.xr.account;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ImportResource;
 
 /**
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.ImportResource;
  * <b>author</b>：forvoyager@outlook.com
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@EnableDiscoveryClient
 @ImportResource("classpath*:spring.xml")
 public class AccountServiceApplication {
   public static void main(String[] args) {

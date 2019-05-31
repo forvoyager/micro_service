@@ -1,4 +1,4 @@
-package com.xr.account.client;
+package com.xr.order.client;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableFeignClients
-@ConditionalOnProperty(prefix = AccountClientProperties.PREFIX, name = "enabled", matchIfMissing = true)
-public class AccountClientAutoConfiguration {
+@ConditionalOnProperty(prefix = OrderClientProperties.PREFIX, name = "enabled", matchIfMissing = true)
+public class OrderClientAutoConfiguration {
 }

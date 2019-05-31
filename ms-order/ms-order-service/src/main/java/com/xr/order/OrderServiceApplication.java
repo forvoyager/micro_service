@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ImportResource;
  * <b>description</b>：订单服务 <br>
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@EnableDiscoveryClient
 @ImportResource("classpath*:spring.xml")
 public class OrderServiceApplication {
   public static void main(String[] args) {

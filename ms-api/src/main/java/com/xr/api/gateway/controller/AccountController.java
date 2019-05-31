@@ -2,6 +2,7 @@ package com.xr.api.gateway.controller;
 
 import com.xr.account.client.api.AccountClient;
 import com.xr.account.common.model.AccountModel;
+import com.xr.api.gateway.base.BaseController;
 import com.xr.base.core.dto.ResultDto;
 import com.xr.base.core.enums.Cluster;
 import com.xr.base.core.page.PageData;
@@ -9,7 +10,9 @@ import com.xr.base.core.util.DateUtil;
 import com.xr.base.core.util.MapUtils;
 import com.xr.base.core.util.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -17,7 +20,7 @@ import java.util.Map;
  * Created by forvoyager@outlook.com on 2019-02-13 13:07.
  */
 @RestController
-public class AccountController {
+public class AccountController extends BaseController {
 
   @Autowired
   private AccountClient accountClient;
