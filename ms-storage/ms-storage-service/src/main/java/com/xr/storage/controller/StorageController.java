@@ -69,7 +69,7 @@ public class StorageController implements IStorageController {
 
   @Override
   public ResultDto<List<StorageModel>> selectByIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(storageService.selectBatchIds(idList, master));
+    return ResultDto.success(storageService.selectByIds(idList, master));
   }
 
   @Override

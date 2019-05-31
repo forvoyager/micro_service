@@ -68,8 +68,8 @@ public class AccountController implements IAccountController{
   }
 
   @Override
-  public ResultDto<List<AccountModel>> selectBatchIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectBatchIds(idList, master));
+  public ResultDto<List<AccountModel>> selectByIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception {
+    return ResultDto.success(accountService.selectByIds(idList, master));
   }
 
   @Override

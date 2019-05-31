@@ -119,7 +119,7 @@ public interface IAccountController {
    * @return AccountModel
    */
   @RequestMapping("/account/select/{master}/batch")
-  ResultDto<List<AccountModel>> selectBatchIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception;
+  ResultDto<List<AccountModel>> selectByIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception;
 
   /**
    * <p>

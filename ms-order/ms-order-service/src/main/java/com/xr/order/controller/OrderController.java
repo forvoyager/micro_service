@@ -69,7 +69,7 @@ public class OrderController implements IOrderController {
 
   @Override
   public ResultDto<List<OrderModel>> selectByIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(orderService.selectBatchIds(idList, master));
+    return ResultDto.success(orderService.selectByIds(idList, master));
   }
 
   @Override

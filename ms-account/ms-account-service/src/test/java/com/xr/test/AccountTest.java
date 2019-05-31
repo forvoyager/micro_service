@@ -106,7 +106,7 @@ public class AccountTest extends BaseTestWithoutLogin {
   }
 
   @Test
-  public void selectBatchIds() throws Exception {
+  public void selectByIds() throws Exception {
     Map<String, Object> param = new HashMap<>();
     param.put("master", Cluster.slave);
     this.requestRestful("/account/select/{master}/batch", param);
