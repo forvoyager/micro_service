@@ -50,6 +50,12 @@
 
     <dependency>
       <groupId>com.xr</groupId>
+      <artifactId>ms-order-client-starter</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.xr</groupId>
       <artifactId>ms-base-trace-feign</artifactId>
       <version>${project.version}</version>
     </dependency>

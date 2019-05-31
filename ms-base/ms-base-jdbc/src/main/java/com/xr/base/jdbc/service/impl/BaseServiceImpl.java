@@ -1,22 +1,34 @@
 package com.xr.base.jdbc.service.impl;
 
+import com.xr.base.core.enums.Cluster;
 import com.xr.base.core.model.BaseModel;
 import com.xr.base.core.page.PageData;
-import com.xr.base.core.util.*;
-import com.xr.base.core.enums.Cluster;
+import com.xr.base.core.util.AssertUtils;
+import com.xr.base.core.util.CollectionUtils;
+import com.xr.base.core.util.DateUtil;
+import com.xr.base.core.util.MapUtils;
+import com.xr.base.core.util.ReflectUtils;
+import com.xr.base.core.util.StringUtils;
 import com.xr.base.jdbc.mapper.IBaseMapper;
 import com.xr.base.jdbc.service.IBaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 数据基础操作实现
  * Created by forvoyager@outlook.com on 2019-01-31 14:01.
  */
+@Transactional(propagation = Propagation.REQUIRED)
 public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IBaseService<T> {
 
   protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -102,7 +114,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
       baseModel.setUpdate_time(DateUtil.currentTimeInSecond());
     }
 
-    return this.updateByMap(Utils.javaBeanToMap(entity));
+    return this.updateByMap(ReflectUtils.javaBeanToMap(entity));
   }
 
   @Override
@@ -113,6 +125,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
     return this.baseMapper.update(columnMap);
   }
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   @Override
   public T selectById(Serializable id, Cluster cluster) throws Exception {
 
@@ -121,6 +134,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
     return this.selectOne(MapUtils.newHashMap(this.getPrimaryKeyName(), id), cluster);
   }
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   @Override
   public List<T> selectByIds(Collection<? extends Serializable> idList, Cluster cluster) throws Exception {
     if(CollectionUtils.isEmpty(idList)){
@@ -130,12 +144,14 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
     return this.selectList(MapUtils.newHashMap("idList", idList), cluster);
   }
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   @Override
   public T selectOne(Map<String, Object> condition, Cluster cluster) throws Exception {
     List<T> data = this.baseMapper.selectList(condition);
     return CollectionUtils.isEmpty(data) ? null : data.get(0);
   }
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   @Override
   public List<T> selectList(Map<String, Object> condition, Cluster cluster) throws Exception {
 
@@ -144,6 +160,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
     return this.baseMapper.selectList(condition);
   }
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   @Override
   public Map<String, T> selectMap(Map<String, Object> condition, Cluster cluster) throws Exception {
 
@@ -157,6 +174,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
     return primaryKeyMapData;
   }
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   @Override
   public long selectCount(Map<String, Object> condition, Cluster cluster) throws Exception {
 
@@ -165,6 +183,7 @@ public abstract class BaseServiceImpl<M extends IBaseMapper<T>, T> implements IB
     return this.baseMapper.selectCount(condition);
   }
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   @Override
   public PageData<T> selectPage(int page, int size, Map<String, Object> condition, Cluster cluster) throws Exception {
 

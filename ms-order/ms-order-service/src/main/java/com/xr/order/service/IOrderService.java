@@ -9,4 +9,13 @@ import com.xr.base.jdbc.service.IBaseService;
  * <b>description</b>: 商品购买信息 服务定义 <br>
  */
 public interface IOrderService extends IBaseService<OrderModel> {
+
+  /**
+   * 创建订单
+   * @param commodity_id 商品ID
+   * @param count 数量
+   * @throws Exception
+   */
+  OrderModel createOrder(long commodity_id, int count) throws Exception;
+
 }

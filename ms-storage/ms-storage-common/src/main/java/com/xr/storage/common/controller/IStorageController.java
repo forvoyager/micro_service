@@ -7,6 +7,7 @@ import com.xr.base.core.page.PageData;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -183,4 +184,13 @@ public interface IStorageController {
   @RequestMapping("/storage/select/{master}/page/{page}/{size}")
   ResultDto<PageData<StorageModel>> selectPage(@PathVariable("page") int page, @PathVariable("size") int size, @RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
 
+  /**
+   * 减少库存
+   * @param commodity_id 商品id
+   * @param count 数量
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping("/storage/decrease")
+  ResultDto decreaseStorage(@RequestParam("commodity_id") long commodity_id, @RequestParam("count") int count) throws Exception;
 }

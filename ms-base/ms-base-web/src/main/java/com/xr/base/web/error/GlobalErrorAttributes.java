@@ -3,7 +3,7 @@ package com.xr.base.web.error;
 import com.google.common.base.Throwables;
 import com.xr.base.core.dto.ResultDto;
 import com.xr.base.core.exception.BaseException;
-import com.xr.base.core.util.Utils;
+import com.xr.base.core.util.ReflectUtils;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.web.context.request.WebRequest;
 
@@ -41,7 +41,7 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
     }
 
     try {
-      return Utils.javaBeanToMap(result);
+      return ReflectUtils.javaBeanToMap(result);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

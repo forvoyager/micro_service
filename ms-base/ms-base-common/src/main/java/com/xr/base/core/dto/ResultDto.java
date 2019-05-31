@@ -3,6 +3,7 @@ package com.xr.base.core.dto;
 import com.xr.base.core.enums.ResultCodeEnum;
 import com.xr.base.core.util.DateUtil;
 
+import java.beans.Transient;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class ResultDto<T> implements Serializable{
     return success(msg, null);
   }
 
-  public static ResultDto success(Object data) {
+  public static ResultDto successData(Object data) {
     return success("OK", data);
   }
 
@@ -114,5 +115,20 @@ public class ResultDto<T> implements Serializable{
 
   public void setTime(Long time) {
     this.time = time;
+  }
+
+  @Transient
+  public void assertSuccess(){
+    if(ResultCodeEnum.SUCCESS.getCode().equals(code)){
+      return;
+    }
+
+    throw new IllegalStateException(message);
+  }
+
+  @Transient
+  public T getSuccessData(){
+    this.assertSuccess();
+    return data;
   }
 }

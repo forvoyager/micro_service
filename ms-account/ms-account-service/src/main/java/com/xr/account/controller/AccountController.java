@@ -29,72 +29,72 @@ public class AccountController implements IAccountController{
 
   @Override
   public ResultDto<AccountModel> insert(@RequestBody AccountModel entity) throws Exception {
-    return ResultDto.success(accountService.insert(entity));
+    return ResultDto.successData(accountService.insert(entity));
   }
 
   @Override
   public ResultDto<Integer> insertBatch(@RequestBody List<AccountModel> entityList) throws Exception {
-    return ResultDto.success(accountService.insertBatch(entityList));
+    return ResultDto.successData(accountService.insertBatch(entityList));
   }
 
   @Override
   public ResultDto<AccountModel> insertOrUpdate(@RequestBody AccountModel entity) throws Exception {
-    return ResultDto.success(accountService.insertOrUpdate(entity));
+    return ResultDto.successData(accountService.insertOrUpdate(entity));
   }
 
   @Override
   public ResultDto<Integer> deleteById(@PathVariable("user_id") long user_id) throws Exception {
-    return ResultDto.success(accountService.deleteById(user_id));
+    return ResultDto.successData(accountService.deleteById(user_id));
   }
 
   @Override
   public ResultDto<Integer> deleteByMap(@RequestBody Map<String, Object> condition) throws Exception {
-    return ResultDto.success(accountService.deleteByMap(condition));
+    return ResultDto.successData(accountService.deleteByMap(condition));
   }
 
   @Override
   public ResultDto<Integer> update(@RequestBody AccountModel entity) throws Exception {
-    return ResultDto.success(accountService.update(entity));
+    return ResultDto.successData(accountService.update(entity));
   }
 
   @Override
   public ResultDto<Integer> updateByMap(@RequestBody Map<String, Object> condition) throws Exception {
-    return ResultDto.success(accountService.updateByMap(condition));
+    return ResultDto.successData(accountService.updateByMap(condition));
   }
 
   @Override
   public ResultDto<AccountModel> selectById(@PathVariable("user_id") long user_id, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectById(user_id, master));
+    return ResultDto.successData(accountService.selectById(user_id, master));
   }
 
   @Override
   public ResultDto<List<AccountModel>> selectByIds(@RequestBody Collection<? extends Serializable> idList, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectByIds(idList, master));
+    return ResultDto.successData(accountService.selectByIds(idList, master));
   }
 
   @Override
   public ResultDto<List<AccountModel>> selectList(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectList(condition, master));
+    return ResultDto.successData(accountService.selectList(condition, master));
   }
 
   @Override
   public ResultDto<AccountModel> selectOne(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectOne(condition, master));
+    return ResultDto.successData(accountService.selectOne(condition, master));
   }
 
   @Override
   public ResultDto<Map<String, AccountModel>> selectMap(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectMap(condition, master));
+    return ResultDto.successData(accountService.selectMap(condition, master));
   }
 
   @Override
   public ResultDto<Long> selectCount(@RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectCount(condition, master));
+    return ResultDto.successData(accountService.selectCount(condition, master));
   }
 
   @Override
   public ResultDto<PageData<AccountModel>> selectPage(@PathVariable("page") int page, @PathVariable("size") int size, @RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
-    return ResultDto.success(accountService.selectPage(page, size, condition, master));
+    return ResultDto.successData(accountService.selectPage(page, size, condition, master));
   }
 
 }

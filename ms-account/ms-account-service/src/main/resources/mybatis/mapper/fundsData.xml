@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- time: 2019-04-15 13:05:27 -->
 <!-- author: forvoyager@outlook.com -->
-<!-- description: 账户信息 数据库操作mapper -->
-<mapper namespace="com.xr.account.mapper.AccountMapper">
+<!-- time: 2019-05-31 16:13:56 -->
+<!-- description: 账户资金流水 数据库操作mapper -->
+<mapper namespace="com.xr.account.mapper.FundsDataMapper">
 
   <sql id="Base_Column_List">
-    `user_id`, `balance`, `frozen`, `create_time`, `update_time`, `version`
+    `id`, `user_id`, `price`, `balance`, `type`, `flag`, `ref_id`, `ref_table`, `create_time`, `update_time`, `version`
   </sql>
 
   <!-- 自定义查询条件 -->
@@ -17,7 +17,7 @@
   <!-- 基础查询条件，不允许修改，自定义条件在Custom_Where_Sql中添加 -->
   <sql id="Base_Where_Sql">
     <if test="idList != null and idList.size() > 0">
-      <![CDATA[ AND t.`user_id` IN ]]>
+      <![CDATA[ AND t.`id` IN ]]>
       <foreach collection="idList" item="item" open="(" separator="," close=")">
         <![CDATA[ #{item} ]]>
       </foreach>
@@ -25,14 +25,29 @@
     <if test="where_version != null">
       <![CDATA[ AND t.`version` = #{where_version} ]]>
     </if>
+    <if test="id != null">
+      <![CDATA[ AND t.`id` = #{id} ]]>
+    </if>
     <if test="user_id != null">
       <![CDATA[ AND t.`user_id` = #{user_id} ]]>
+    </if>
+    <if test="price != null">
+      <![CDATA[ AND t.`price` = #{price} ]]>
     </if>
     <if test="balance != null">
       <![CDATA[ AND t.`balance` = #{balance} ]]>
     </if>
-    <if test="frozen != null">
-      <![CDATA[ AND t.`frozen` = #{frozen} ]]>
+    <if test="type != null">
+      <![CDATA[ AND t.`type` = #{type} ]]>
+    </if>
+    <if test="flag != null">
+      <![CDATA[ AND t.`flag` = #{flag} ]]>
+    </if>
+    <if test="ref_id != null">
+      <![CDATA[ AND t.`ref_id` = #{ref_id} ]]>
+    </if>
+    <if test="ref_table != null">
+      <![CDATA[ AND t.`ref_table` = #{ref_table} ]]>
     </if>
     <if test="create_time != null">
       <![CDATA[ AND t.`create_time` = #{create_time} ]]>
@@ -50,17 +65,32 @@
   </sql>
 
   <!-- 插入 -->
-  <insert id="insert" parameterType="com.xr.account.common.model.AccountModel" keyProperty="user_id">
-    <![CDATA[ INSERT INTO `ms_account` ]]>
+  <insert id="insert" parameterType="com.xr.account.common.model.FundsDataModel" keyProperty="user_id">
+    <![CDATA[ INSERT INTO `ms_funds_data` ]]>
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        <![CDATA[ `id`, ]]>
+      </if>
       <if test="user_id != null">
         <![CDATA[ `user_id`, ]]>
+      </if>
+      <if test="price != null">
+        <![CDATA[ `price`, ]]>
       </if>
       <if test="balance != null">
         <![CDATA[ `balance`, ]]>
       </if>
-      <if test="frozen != null">
-        <![CDATA[ `frozen`, ]]>
+      <if test="type != null">
+        <![CDATA[ `type`, ]]>
+      </if>
+      <if test="flag != null">
+        <![CDATA[ `flag`, ]]>
+      </if>
+      <if test="ref_id != null">
+        <![CDATA[ `ref_id`, ]]>
+      </if>
+      <if test="ref_table != null">
+        <![CDATA[ `ref_table`, ]]>
       </if>
       <if test="create_time != null">
         <![CDATA[ `create_time`, ]]>
@@ -74,14 +104,29 @@
     </trim>
     <![CDATA[ VALUES ]]>
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        <![CDATA[ #{id}, ]]>
+      </if>
       <if test="user_id != null">
         <![CDATA[ #{user_id}, ]]>
+      </if>
+      <if test="price != null">
+        <![CDATA[ #{price}, ]]>
       </if>
       <if test="balance != null">
         <![CDATA[ #{balance}, ]]>
       </if>
-      <if test="frozen != null">
-        <![CDATA[ #{frozen}, ]]>
+      <if test="type != null">
+        <![CDATA[ #{type}, ]]>
+      </if>
+      <if test="flag != null">
+        <![CDATA[ #{flag}, ]]>
+      </if>
+      <if test="ref_id != null">
+        <![CDATA[ #{ref_id}, ]]>
+      </if>
+      <if test="ref_table != null">
+        <![CDATA[ #{ref_table}, ]]>
       </if>
       <if test="create_time != null">
         <![CDATA[ #{create_time}, ]]>
@@ -96,30 +141,45 @@
   </insert>
 
   <!-- 批量插入 -->
-  <insert id="insertBatch" parameterType="com.xr.account.common.model.AccountModel">
-    <![CDATA[ INSERT INTO `ms_account` (`user_id`, `balance`, `frozen`, `create_time`, `update_time`, `version`) VALUES ]]>
+  <insert id="insertBatch" parameterType="com.xr.account.common.model.FundsDataModel">
+    <![CDATA[ INSERT INTO `ms_funds_data` (`id`, `user_id`, `price`, `balance`, `type`, `flag`, `ref_id`, `ref_table`, `create_time`, `update_time`, `version`) VALUES ]]>
     <foreach collection="list" separator="," item="item">
-      (#{item.user_id}, #{item.balance}, #{item.frozen}, #{item.create_time}, #{item.update_time}, #{item.version})
+      (#{item.id}, #{item.user_id}, #{item.price}, #{item.balance}, #{item.type}, #{item.flag}, #{item.ref_id}, #{item.ref_table}, #{item.create_time}, #{item.update_time}, #{item.version})
     </foreach>
   </insert>
 
   <!-- 更新（主键/version/create_time不会被更新，version自增1） -->
   <update id="update" parameterType="map">
-    <![CDATA[ UPDATE `ms_account` t SET t.`version` = t.`version` + 1, ]]>
+    <![CDATA[ UPDATE `ms_funds_data` t SET t.`version` = t.`version` + 1, ]]>
     <trim suffixOverrides=",">
+      <if test="user_id != null">
+        <![CDATA[ t.`user_id` = #{user_id}, ]]>
+      </if>
+      <if test="price != null">
+        <![CDATA[ t.`price` = #{price}, ]]>
+      </if>
       <if test="balance != null">
         <![CDATA[ t.`balance` = #{balance}, ]]>
       </if>
-      <if test="frozen != null">
-        <![CDATA[ t.`frozen` = #{frozen}, ]]>
+      <if test="type != null">
+        <![CDATA[ t.`type` = #{type}, ]]>
+      </if>
+      <if test="flag != null">
+        <![CDATA[ t.`flag` = #{flag}, ]]>
+      </if>
+      <if test="ref_id != null">
+        <![CDATA[ t.`ref_id` = #{ref_id}, ]]>
+      </if>
+      <if test="ref_table != null">
+        <![CDATA[ t.`ref_table` = #{ref_table}, ]]>
       </if>
       <if test="update_time != null">
         <![CDATA[ t.`update_time` = #{update_time}, ]]>
       </if>
     </trim>
     <where>
-      <if test="user_id != null">
-        <![CDATA[ AND t.`user_id` = #{user_id} ]]>
+      <if test="id != null">
+        <![CDATA[ AND t.`id` = #{id} ]]>
       </if>
       <if test="where_version != null">
         <![CDATA[ AND t.`version` = #{where_version} ]]>
@@ -129,55 +189,25 @@
 
   <!-- 删除 -->
   <delete id="delete" parameterType="map">
-    <![CDATA[ DELETE t FROM `ms_account` t ]]>
+    <![CDATA[ DELETE t FROM `ms_funds_data` t ]]>
     <include refid="Where_Sql"/>
   </delete>
 
   <!-- 查询行数 -->
   <select id="selectCount" parameterType="map" resultType="long">
-    <![CDATA[ SELECT COUNT(*) FROM `ms_account` t ]]>
+    <![CDATA[ SELECT COUNT(*) FROM `ms_funds_data` t ]]>
     <include refid="Where_Sql"/>
   </select>
 
   <!-- 查询记录 -->
-  <select id="selectList" parameterType="map" resultType="com.xr.account.common.model.AccountModel">
+  <select id="selectList" parameterType="map" resultType="com.xr.account.common.model.FundsDataModel">
     <include refid="global.pageStart"/>
     <![CDATA[ SELECT ]]>
     <include refid="Base_Column_List"/>
-    <![CDATA[ FROM `ms_account` t ]]>
+    <![CDATA[ FROM `ms_funds_data` t ]]>
     <include refid="Where_Sql"/>
     <include refid="global.globalSort"/>
     <include refid="global.pageEnd"/>
   </select>
-
-  <!-- 更新用户资金信息 -->
-  <update id="updateUserFunds" parameterType="map">
-    <![CDATA[ UPDATE `ms_account` t SET t.`version` = t.`version` + 1, ]]>
-    <trim suffixOverrides=",">
-      <if test="balance != null">
-        <![CDATA[ t.`balance` = t.`balance` + #{balance}, ]]>
-      </if>
-      <if test="frozen != null">
-        <![CDATA[ t.`frozen` = t.`frozen` + #{frozen}, ]]>
-      </if>
-      <if test="update_time != null">
-        <![CDATA[ t.`update_time` = #{update_time}, ]]>
-      </if>
-    </trim>
-    <where>
-      <if test="user_id != null">
-        <![CDATA[ AND t.`user_id` = #{user_id} ]]>
-      </if>
-      <if test="balance != null">
-        <![CDATA[ AND t.`balance` + #{balance} >= 0 ]]>
-      </if>
-      <if test="frozen != null">
-        <![CDATA[ AND t.`frozen` + #{frozen} >= 0 ]]>
-      </if>
-      <if test="where_version != null">
-        <![CDATA[ AND t.`version` = #{where_version} ]]>
-      </if>
-    </where>
-  </update>
 
 </mapper>

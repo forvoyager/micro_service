@@ -1,12 +1,13 @@
 package com.xr.order.common.controller;
 
-import com.xr.order.common.model.OrderModel;
 import com.xr.base.core.dto.ResultDto;
 import com.xr.base.core.enums.Cluster;
 import com.xr.base.core.page.PageData;
+import com.xr.order.common.model.OrderModel;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -182,5 +183,16 @@ public interface IOrderController {
    */
   @RequestMapping("/order/select/{master}/page/{page}/{size}")
   ResultDto<PageData<OrderModel>> selectPage(@PathVariable("page") int page, @PathVariable("size") int size, @RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
+
+  /**
+   * 创建订单
+   *
+   * @param commodity_id 商品id
+   * @param count 数量
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping("/storage/decrease")
+  ResultDto<OrderModel> createOrder(@RequestParam("commodity_id") long commodity_id, @RequestParam("count") int count) throws Exception;
 
 }

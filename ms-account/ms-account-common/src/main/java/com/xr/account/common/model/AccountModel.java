@@ -8,6 +8,11 @@ import com.xr.base.core.model.BaseModel;
  * <b>author</b>：forvoyager@outlook.com
  */
 public class AccountModel extends BaseModel {
+
+  public static final String USER_ID = "user_id";
+  public static final String BALANCE = "balance";
+  public static final String FROZEN = "frozen";
+
   /**
    * 用户ID
    */

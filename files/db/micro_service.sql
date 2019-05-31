@@ -57,6 +57,22 @@ CREATE TABLE IF NOT EXISTS `ms_account_db`.`ms_account` (
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB COMMENT '账户信息';
 
+CREATE TABLE `ms_funds_data` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_id` int(10) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `price` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '发生金额',
+  `balance` decimal(11,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
+  `type` mediumint(5) NOT NULL DEFAULT '0' COMMENT '流水类型',
+  `flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '标志位 -1减少 0不变 1增加 ',
+  `ref_id` bigint(11) NOT NULL DEFAULT '0' COMMENT '关联ID',
+  `ref_table` int(3) NOT NULL DEFAULT '0' COMMENT '关联表',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
+  PRIMARY KEY (`id`),
+  KEY `index_a_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='账户资金流水';
+
 USE `ms_storage_db` ;
 
 -- -----------------------------------------------------
