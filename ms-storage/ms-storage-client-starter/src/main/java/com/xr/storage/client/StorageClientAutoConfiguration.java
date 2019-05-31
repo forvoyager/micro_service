@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: client 自动化配置
  */
 @Configuration
-@EnableFeignClients
+@EnableFeignClients // 启动@FeignClient标注的客户端，并生成代理对象
 @ConditionalOnProperty(prefix = StorageClientProperties.PREFIX, name = "enabled", matchIfMissing = true)
 public class StorageClientAutoConfiguration {
 }

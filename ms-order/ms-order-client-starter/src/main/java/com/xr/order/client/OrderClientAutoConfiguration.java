@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * <b>author</b>：forvoyager@outlook.com
  */
 @Configuration
-@EnableFeignClients
+@EnableFeignClients // 启动@FeignClient标注的客户端，并生成代理对象
 @ConditionalOnProperty(prefix = OrderClientProperties.PREFIX, name = "enabled", matchIfMissing = true)
 public class OrderClientAutoConfiguration {
 }

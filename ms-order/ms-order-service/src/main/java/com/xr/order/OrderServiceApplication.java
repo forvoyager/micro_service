@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ImportResource;
  * <b>time</b>：2019-05-30 19:52 <br>
  * <b>description</b>：订单服务 <br>
  */
+@EnableDiscoveryClient // 将微服务注册到服务发现组件上
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ImportResource("classpath*:spring.xml")
 public class OrderServiceApplication {
