@@ -192,6 +192,7 @@ public interface IAccountController {
    * @param type 流水类型
    * @throws Exception
    */
+  @RequestMapping("/account/frozen")
   ResultDto frozen(@RequestParam("user_id") long user_id, @RequestParam("price") double price, @RequestParam("type") FundsDataType type) throws Exception;
 
   /**
@@ -201,6 +202,7 @@ public interface IAccountController {
    * @param type 流水类型
    * @throws Exception
    */
+  @RequestMapping("/account/unFrozen")
   ResultDto unFrozen(@RequestParam("user_id") long user_id, @RequestParam("price") double price, @RequestParam("type") FundsDataType type) throws Exception;
 
   /**
@@ -210,5 +212,6 @@ public interface IAccountController {
    * @param type 流水类型
    * @throws Exception
    */
+  @RequestMapping("/account/payment")
   ResultDto payment(@RequestParam("user_id") long user_id, @RequestParam("price") double price, @RequestParam("type") FundsDataType type) throws Exception;
 }

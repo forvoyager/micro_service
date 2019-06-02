@@ -38,6 +38,12 @@
 
     <dependency>
       <groupId>com.xr</groupId>
+      <artifactId>ms-discovery-client-starter</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.xr</groupId>
       <artifactId>ms-account-client-starter</artifactId>
       <version>${project.version}</version>
     </dependency>

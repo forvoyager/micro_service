@@ -30,9 +30,11 @@ public class TradeServiceImpl implements ITradeService {
   public OrderModel purchase(long user_id, long commodity_id, int count) throws Exception {
 
     // 1、减库存
+    logger.info("减少库存");
     storageClient.decreaseStorage(commodity_id, count).assertSuccess();
 
     // 2、创建订单
+    logger.info("开始创建订单");
     OrderModel orderModel = orderClient.createOrder(user_id, commodity_id, count).getSuccessData();
 
     logger.info("购买商品成功，订单信息：{}", JsonUtils.toJson(orderModel));
