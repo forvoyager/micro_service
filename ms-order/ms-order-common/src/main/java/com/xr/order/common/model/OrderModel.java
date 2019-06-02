@@ -18,11 +18,11 @@ public class OrderModel extends BaseModel {
   /**
    * 用户ID
    */
-  private Integer user_id;
+  private Long user_id;
   /**
    * 商品ID
    */
-  private Integer commodity_id;
+  private Long commodity_id;
   /**
    * 商品数量
    */
@@ -34,20 +34,20 @@ public class OrderModel extends BaseModel {
   /**
    * 成交时间（秒数）
    */
-  private Integer trade_time;
+  private Long trade_time;
 
-  public Integer getUser_id() {
+  public Long getUser_id() {
     return this.user_id;
   }
-  public OrderModel setUser_id(Integer user_id) {
+  public OrderModel setUser_id(Long user_id) {
     this.user_id = user_id;
     return this;
   }
 
-  public Integer getCommodity_id() {
+  public Long getCommodity_id() {
     return this.commodity_id;
   }
-  public OrderModel setCommodity_id(Integer commodity_id) {
+  public OrderModel setCommodity_id(Long commodity_id) {
     this.commodity_id = commodity_id;
     return this;
   }
@@ -68,10 +68,10 @@ public class OrderModel extends BaseModel {
     return this;
   }
 
-  public Integer getTrade_time() {
+  public Long getTrade_time() {
     return this.trade_time;
   }
-  public OrderModel setTrade_time(Integer trade_time) {
+  public OrderModel setTrade_time(Long trade_time) {
     this.trade_time = trade_time;
     return this;
   }

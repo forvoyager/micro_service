@@ -187,12 +187,13 @@ public interface IOrderController {
   /**
    * 创建订单
    *
+   * @param user_id
    * @param commodity_id 商品id
    * @param count 数量
    * @return
    * @throws Exception
    */
   @RequestMapping("/storage/decrease")
-  ResultDto<OrderModel> createOrder(@RequestParam("commodity_id") long commodity_id, @RequestParam("count") int count) throws Exception;
+  ResultDto<OrderModel> createOrder(@RequestParam("user_id") long user_id, @RequestParam("commodity_id") long commodity_id, @RequestParam("count") int count) throws Exception;
 
 }

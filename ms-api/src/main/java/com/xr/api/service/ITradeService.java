@@ -12,10 +12,11 @@ public interface ITradeService extends IService{
 
   /**
    * 购买商品
+   * @param user_id
    * @param commodity_id 商品id
    * @param count 数量
    * @throws Exception
    */
-  OrderModel purchase(long commodity_id, int count) throws Exception;
+  OrderModel purchase(long user_id, long commodity_id, int count) throws Exception;
 
 }

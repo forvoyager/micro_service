@@ -1,6 +1,7 @@
 package com.xr.account.controller;
 
 import com.xr.account.common.controller.IAccountController;
+import com.xr.account.common.enums.FundsDataType;
 import com.xr.account.common.model.AccountModel;
 import com.xr.account.service.IAccountService;
 import com.xr.base.core.dto.ResultDto;
@@ -95,6 +96,24 @@ public class AccountController implements IAccountController{
   @Override
   public ResultDto<PageData<AccountModel>> selectPage(@PathVariable("page") int page, @PathVariable("size") int size, @RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception {
     return ResultDto.successData(accountService.selectPage(page, size, condition, master));
+  }
+
+  @Override
+  public ResultDto frozen(long user_id, double price, FundsDataType type) throws Exception {
+    accountService.frozen(user_id, price, type);
+    return ResultDto.success("冻结用户资金成功");
+  }
+
+  @Override
+  public ResultDto unFrozen(long user_id, double price, FundsDataType type) throws Exception {
+    accountService.unFrozen(user_id, price, type);
+    return ResultDto.success("解冻用户资金成功");
+  }
+
+  @Override
+  public ResultDto payment(long user_id, double price, FundsDataType type) throws Exception {
+    accountService.payment(user_id, price, type);
+    return ResultDto.success("支出用户资金成功");
   }
 
 }

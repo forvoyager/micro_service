@@ -99,8 +99,8 @@ public class OrderController implements IOrderController {
   }
 
   @Override
-  public ResultDto<OrderModel> createOrder(@RequestParam("commodity_id") long commodity_id, @RequestParam("count") int count) throws Exception {
-    return ResultDto.successData(orderService.createOrder(commodity_id, count));
+  public ResultDto<OrderModel> createOrder(@RequestParam("user_id") long user_id, @RequestParam("commodity_id") long commodity_id, @RequestParam("count") int count) throws Exception {
+    return ResultDto.successData(orderService.createOrder(user_id, commodity_id, count));
   }
 
 }

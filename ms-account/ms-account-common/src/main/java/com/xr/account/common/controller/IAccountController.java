@@ -1,5 +1,6 @@
 package com.xr.account.common.controller;
 
+import com.xr.account.common.enums.FundsDataType;
 import com.xr.account.common.model.AccountModel;
 import com.xr.base.core.dto.ResultDto;
 import com.xr.base.core.enums.Cluster;
@@ -7,6 +8,7 @@ import com.xr.base.core.page.PageData;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -183,4 +185,30 @@ public interface IAccountController {
   @RequestMapping("/account/select/{master}/page/{page}/{size}")
   ResultDto<PageData<AccountModel>> selectPage(@PathVariable("page") int page, @PathVariable("size") int size, @RequestBody Map<String, Object> condition, @PathVariable("master") Cluster master) throws Exception;
 
+  /**
+   * 冻结用户资金
+   * @param user_id 用户id
+   * @param price 金额
+   * @param type 流水类型
+   * @throws Exception
+   */
+  ResultDto frozen(@RequestParam("user_id") long user_id, @RequestParam("price") double price, @RequestParam("type") FundsDataType type) throws Exception;
+
+  /**
+   * 解冻用户资金
+   * @param user_id 用户id
+   * @param price 金额
+   * @param type 流水类型
+   * @throws Exception
+   */
+  ResultDto unFrozen(@RequestParam("user_id") long user_id, @RequestParam("price") double price, @RequestParam("type") FundsDataType type) throws Exception;
+
+  /**
+   * 支出用户资金
+   * @param user_id 用户id
+   * @param price 金额
+   * @param type 流水类型
+   * @throws Exception
+   */
+  ResultDto payment(@RequestParam("user_id") long user_id, @RequestParam("price") double price, @RequestParam("type") FundsDataType type) throws Exception;
 }

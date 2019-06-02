@@ -20,8 +20,8 @@ public class TradeController extends BaseController {
   private ITradeService tradeService;
 
   @RequestMapping("/purchase")
-  public ResultDto purchase(long commodity_id, int count) throws Exception {
-    return ResultDto.successData(tradeService.purchase(commodity_id, count));
+  public ResultDto purchase(long user_id, long commodity_id, int count) throws Exception {
+    return ResultDto.successData(tradeService.purchase(user_id, commodity_id, count));
   }
 
 }

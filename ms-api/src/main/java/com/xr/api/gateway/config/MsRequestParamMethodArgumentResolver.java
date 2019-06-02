@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer;
 import com.xr.base.core.util.JsonUtils;
-import org.apache.commons.lang.StringUtils;
+import com.xr.base.core.util.StringUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.annotation.ValueConstants;
 import org.springframework.web.context.request.NativeWebRequest;

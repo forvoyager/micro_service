@@ -12,10 +12,12 @@ public interface IOrderService extends IBaseService<OrderModel> {
 
   /**
    * 创建订单
+   *
+   * @param user_id
    * @param commodity_id 商品ID
    * @param count 数量
    * @throws Exception
    */
-  OrderModel createOrder(long commodity_id, int count) throws Exception;
+  OrderModel createOrder(long user_id, long commodity_id, int count) throws Exception;
 
 }
