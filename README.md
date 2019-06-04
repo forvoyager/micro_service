@@ -37,5 +37,26 @@
 | ms-storage-client-starter | 商品库存中心服务请求客户端，其他模块需要调用本模块的功能时，引入此starter即可。 |
 | |  |
 
+# 启动服务
+账户服务：com.xr.account.AccountServiceApplication
 
+订单服务：com.xr.order.OrderServiceApplication
 
+库存服务：com.xr.storage.StorageServiceApplication
+
+API：com.xr.api.ApiApplication
+
+# 访问api
+```
+http://localhost:9999/purchase?user_id=100&commodity_id=1&count=1
+```
+处理过程如下：
+1 减少库存
+2 创建订单
+2.1 从账户扣款
+2.2 创建订单
+注：
+1. 调用过程这么拆开，可能与实际处理过程不一样，此处的场景仅作为研究用，目的是模拟微服务化之后，应用之间的调用场景。
+2. 项目中仅仅演示了spring boot/cloud及其相关组建的使用，还有很多功能没有实现，很多问题没有解决，如：分布式事务问题。
+
+后续逐步完善，未完待续……
